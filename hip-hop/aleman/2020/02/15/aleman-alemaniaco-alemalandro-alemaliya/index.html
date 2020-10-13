@@ -147,16 +147,30 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#la-visualización">La visualización</a></li>
 </ul>
 </li>
-</ul><h1 id="alemán-alemalacra-alemalandro-alemaliya">
+</ul><style>
+/* https://css-tricks.com/full-width-containers-limited-width-parents/ */
+.fullwidth {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+</style>
+
+<h1 id="alemán-alemalacra-alemalandro-alemaliya">
 <a class="anchor" href="#alem%C3%A1n-alemalacra-alemalandro-alemaliya" aria-hidden="true"><span class="octicon octicon-link"></span></a>Alemán: Alemalacra Alemalandro Alemaliya</h1>
 
 <h2 id="la-historia">
 <a class="anchor" href="#la-historia" aria-hidden="true"><span class="octicon octicon-link"></span></a>La historia</h2>
+
 <p>Antes de crear <strong>tacosdedatos</strong> intenté crear un blog de Hip Hop Latino-americano donde iba a analizar de una manera cuantitativa la calidad de discos y canciones.</p>
 
 <p>No llegó muy lejos, era en Square space y no era tan fácil escribir notas. Bueno, no tan fácil como lo es ahora que aprendí de blogs y sitios estáticos en GitHub. Aquí puedo escribir todo en mi celular y copiarlo a un archivo markdown directamente en GitHub y <em>voilà</em> tengo un blog.</p>
 
 <p>El que haya fallado <strong>elblogdehiphop</strong> no significa que mi amor por el Hip Hop haya disminuido ni siquiera un poco. Según Spotify, mis artistas más reproducidos son, en orden:</p>
+
 <ol>
   <li>Alemán</li>
   <li>La Plebada</li>
@@ -196,6 +210,7 @@ window.onload = wrap_img;
 <p>La herramienta tiene la opción de descargar los datos. Uno de los atributos de esos datos son las IDs únicas que Spotify le asigna a cada artista. Con estas IDs puedes utilizar la API de Spotify para obtener más información de cada artista como su índice de popularidad, cuántos seguidores tienen, sus canciones más populares y mucho más.</p>
 
 <p>Justo eso fue lo que hice para crear una visualización diferente. Sabiendo que el “universo” de mis datos es <strong>artistas relacionados a Alemán hasta dos niveles de separación</strong> puedo hacer preguntas como:</p>
+
 <ol>
   <li>¿cómo se compara la popularidad de Alemán con la de artistas relacionados?</li>
   <li>¿de qué géneros musicales vienen éstos artistas?</li>
@@ -213,7 +228,9 @@ window.onload = wrap_img;
 
 <h2 id="la-visualización">
 <a class="anchor" href="#la-visualizaci%C3%B3n" aria-hidden="true"><span class="octicon octicon-link"></span></a>La visualización</h2>
+
 <p>Hay solo 5 artistas (+ Alemán) con más de un millón de seguidores en Spotify:</p>
+
 <ol>
   <li>Cartel de Santa 3.94M</li>
   <li>El Komander 1.46M</li>
@@ -227,7 +244,7 @@ window.onload = wrap_img;
 
 <p>Alemán está entre los más populares de este universo lo cual me estoy tomando la libertad de etiquetar como positivo. De alguna manera, este artista underground que llegó a esta altura le está abriendo la puerta a todos estos demás artistas con menos popularidad. Mínimo, Spotify los identifica como artistas relacionados y tal vez aparezcan en una de esas listas de reproducción automatizadas juntos 🤷🏻‍♂️</p>
 
-<iframe width="100%" height="1054" frameborder="0" src="https://observablehq.com/embed/@chekos/aleman-beeswarm-plot-using-spotify-data?cell=chart"></iframe>
+<iframe width="100%" height="900" frameborder="0" class="fullwidth" src="https://observablehq.com/embed/@chekos/aleman-beeswarm-plot-using-spotify-data?cell=chart"></iframe>
 
   </div><iframe src="https://chekos.substack.com/embed" width="100%" height="320" style="border:1px solid #EEE; background:white;" frameborder="0" scrolling="no"></iframe>
 <!-- from https://github.com/utterance/utterances -->
