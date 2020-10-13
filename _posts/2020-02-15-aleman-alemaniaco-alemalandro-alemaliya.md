@@ -9,18 +9,6 @@ show_image: true
 categories: [hip-hop, aleman]
 ---
 
-<style>
-/* https://css-tricks.com/full-width-containers-limited-width-parents/ */
-.fullwidth {
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-}
-</style>
-
 # Alemán: Alemalacra Alemalandro Alemaliya
 
 ## La historia
@@ -91,5 +79,5 @@ Muchos son artistas de rap y hip-hop pero también hay artistas de pop, rock en 
 
 Alemán está entre los más populares de este universo lo cual me estoy tomando la libertad de etiquetar como positivo. De alguna manera, este artista underground que llegó a esta altura le está abriendo la puerta a todos estos demás artistas con menos popularidad. Mínimo, Spotify los identifica como artistas relacionados y tal vez aparezcan en una de esas listas de reproducción automatizadas juntos 🤷🏻‍♂️
 
-<iframe width="100%" height="900" frameborder="0" class="fullwidth"
+<iframe width="100%" height="900" frameborder="0"
   src="https://observablehq.com/embed/@chekos/aleman-beeswarm-plot-using-spotify-data?cell=chart"></iframe>
