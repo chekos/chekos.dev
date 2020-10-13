@@ -6,7 +6,7 @@ toc: true
 comments: true
 image: images/posts_imgs/aleman_network_gif.gif
 show_image: true
-categories: [hip hop, aleman]
+categories: [hip-hop, aleman]
 ---
 
 # Alemán: Alemalacra Alemalandro Alemaliya
