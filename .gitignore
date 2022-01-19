@@ -1,0 +1,8 @@
+.DS_Store
+.hugo*
+public/*
+# Local Netlify folder
+.netlify
+.tweet-cache
+__pycache__
+*.DS_Store
