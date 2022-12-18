@@ -1,0 +1,5 @@
+/* css styles */
+/* Altair charts */
+div[id^="altair-viz-"]{
+    width: 100%
+}
