@@ -44,7 +44,7 @@ Hace unas semanas encontré esta herramienta: [http://labs.polsys.net/playground
 La herramienta utiliza la API de Spotify para crear una red de artistas relacionados hasta dos niveles de separación. Es decir, cuando yo escribo Alemán en la caja de texto la herramienta va y busca todos los artistas relacionados a Alemán (nivel uno) y también busca los artistas relacionados esos artistas (nivel dos).
 
 Así se ve la red de Alemán
-![Red de artistas de Alemán](/static/img/aleman/red-de-artistas.jpg)
+![Red de artistas de Alemán](red-de-artistas.jpg)
 
 La herramienta tiene la opción de descargar los datos. Uno de los atributos de esos datos son las IDs únicas que Spotify le asigna a cada artista. Con estas IDs puedes utilizar la API de Spotify para obtener más información de cada artista como su índice de popularidad, cuántos seguidores tienen, sus canciones más populares y mucho más.
 
