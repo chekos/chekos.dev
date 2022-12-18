@@ -1,0 +1,46 @@
+project:
+  type: website
+
+website:
+  # title: "chekos.dev"
+  site-url: https://chekos.dev
+  repo-url: https://github.com/chekos/chekos.dev
+  open-graph: true 
+  twitter-card: 
+    creator: "@ChekosWH"
+    card-style: summary_large_image 
+  navbar:
+    logo: static/img/cimarron-logo-no-background.png
+    background: secondary
+    right:
+      - about.qmd
+      - icon: github
+        aria-label: github
+        href: https://github.com/chekos/til
+      - icon: twitter
+        aria-label: twitter
+        href: https://twitter.com/chekoswh
+      - icon: mastodon
+        aria-label: mastodon
+        href: https://masto.tacosdedatos.com/@chekos
+      - icon: person-circle
+        aria-label: website
+        href: https://soyserg.io
+      - icon: instagram
+        aria-label: instagram
+        href: https://instagram.com/chekos.visuals
+format:
+  html:
+    theme:
+      dark: darkly
+      light: minty
+    css: styles.css
+    code-fold: true
+    code-line-numbers: true
+    code-copy: true
+
+self-contained: true 
+jupyter: python3
+execute: 
+  error: false
+  warning: false

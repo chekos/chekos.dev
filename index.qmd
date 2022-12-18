@@ -1,0 +1,17 @@
+---
+title: ""
+listing:
+  feed: true
+  contents: posts
+  sort: "date desc"
+  type: table
+  categories: true
+  sort-ui: false
+  filter-ui: false
+  fields: 
+      - date
+      - title
+page-layout: full
+---
+
+

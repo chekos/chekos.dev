@@ -1,0 +1,3 @@
+coolname
+python-slugify
+python-frontmatter
