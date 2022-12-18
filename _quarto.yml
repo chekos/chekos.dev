@@ -2,7 +2,7 @@ project:
   type: website
 
 website:
-  # title: "chekos.dev"
+  title: "chekos' personal blog"
   site-url: https://chekos.dev
   repo-url: https://github.com/chekos/chekos.dev
   open-graph: true 
