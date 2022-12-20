@@ -5,10 +5,15 @@ on:
   push:
     paths:
       - "posts/**"
+      - "about.qmd"
+      - "index.qmd"
+      - "_quarto.yml"
 
 jobs:
-  set-up:
+  build-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write 
     steps:
       - name: Check out repo
         uses: actions/checkout@v3
@@ -23,15 +28,9 @@ jobs:
         run: |-
           pip install -r build-requirements.txt
           pip install -r requirements.txt
-  build-deploy:
-    needs: set-up
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write 
-    steps:
-    - name: Render and Publish
-      uses: quarto-dev/quarto-actions/publish@v2
-      with:
-        target: gh-pages
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Render and Publish
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
