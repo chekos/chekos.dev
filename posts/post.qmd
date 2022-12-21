@@ -3,8 +3,8 @@ categories: [test]
 ---
 # An example post
 
-It could be as simple as this. Just categories in the front matter, the `move_posts.py` will take care of the rest?
+importing a chart from observable
 
 ```{ojs}
-viewof table = Inputs.table(olympians)
+import {chart} from "@chekos/aleman-beeswarm-plot-using-spotify-data"
 ```
