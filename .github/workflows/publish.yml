@@ -28,6 +28,9 @@ jobs:
         run: |-
           pip install -r build-requirements.txt
           pip install -r requirements.txt
+      - name: Move posts
+        run: |-
+          python3 scripts/move_posts.py
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
         with:

@@ -6,9 +6,26 @@ import datetime as dt
 from pathlib import Path
 
 
+def _grab_title(post):
+    if "title" in post.keys():
+        title = post["title"]
+    else:
+        post_lines = post.content.split("\n")
+        headers = [
+            line.replace("#", "").strip() for line in post_lines if line.startswith("#")
+        ]
+        if headers:
+            title = headers[0]
+        else:
+            title = generate_slug(3).replace("-", " ")
+
+    post["title"] = title.title()
+    return title
+
+
 def _slugify_title(post):
     replacemente_strs = [["|", "or"], ["%", "percent"], ["'", ""]]
-    post_title = post.get("title", generate_slug(3))
+    post_title = _grab_title(post)
     return slugify(post_title, replacements=replacemente_strs)
 
 
@@ -25,7 +42,7 @@ def clean_post(post_path: Path):
     post = frontmatter.load(post_path)
     post = _clean_date(post)
     slug = _slugify_title(post)
-    date = post['date']
+    date = post["date"]
 
     if "tags" in post.keys():
         post["categories"] = post["tags"]
