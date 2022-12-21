@@ -1,0 +1,6 @@
+---
+categories: [test]
+---
+# An example post
+
+It could be as simple as this. Just categories in the front matter, the `move_posts.py` will take care of the rest?
