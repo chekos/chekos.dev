@@ -1,0 +1,62 @@
+# Observable Plot test
+
+```{ojs}
+data = d3
+  .csv(
+    "https://raw.githubusercontent.com/chekos/git-scraping-spotify/main/markdown/tracks_long.csv",
+    d3.autoType
+  )
+  .then((data) =>
+    data.map((d) => ({
+      played_at: d.played_at,
+      artist: d.artists,
+      song: d.track_name,
+      album_artist: d.album_artist_name,
+      album_name: d.album_name,
+      album_type: d.album_type,
+      popularity: d.track_popularity,
+      duration_ms: d.track_duration_ms,
+      uri: d.track_uri
+    }))
+  )
+```
+
+```{ojs}
+Inputs.table(data)
+```
+
+```{ojs}
+artists = d3.group(data, (d) => d.artist)
+```
+
+```{ojs}
+viewof artist = Inputs.select(artists, { label: "Artist: " })
+```
+
+```{ojs}
+Plot.plot({
+  marks: [
+    Plot.barX(
+      artist,
+      Plot.groupY(
+        { x: "count" },
+        {
+          y: "song",
+          sort: { y: "x", reverse: true, limit: 10 },
+          fill: "album_name"
+        }
+      )
+    ),
+    Plot.ruleX([0])
+  ],
+  color: {
+    legend: true
+  },
+  marginLeft: 150
+})
+```
+
+
+
+
+
