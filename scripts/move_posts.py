@@ -49,7 +49,7 @@ def clean_post(post_path: Path):
         del post["tags"]
 
     frontmatter.dump(post, post_path)
-    return f"{date.year}/{date.month:02}/{slug}"
+    return f"{date.year}/{slug}"
 
 
 def move_post(post: Path) -> Path:
