@@ -5,6 +5,7 @@ website:
   title: "chekos' personal blog"
   site-url: https://chekos.dev
   repo-url: https://github.com/chekos/chekos.dev
+  reader-mode: true
   open-graph: true 
   twitter-card: 
     creator: "@ChekosWH"
@@ -38,6 +39,9 @@ format:
     code-fold: true
     code-line-numbers: true
     code-copy: true
+    toc: true
+    toc-location: left
+    anchor-sections: true
 
 self-contained: true 
 jupyter: python3
