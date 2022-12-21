@@ -42,10 +42,13 @@ format:
     toc: true
     toc-location: left
     anchor-sections: true
+    title-block-categories: false
+    title-block-banner: false
 
 self-contained: true 
 jupyter: python3
 execute: 
+  freeze: true
   error: false
   warning: false
 
