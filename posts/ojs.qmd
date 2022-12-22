@@ -65,7 +65,8 @@ Plot.plot({
           x: "played_date",
           y: "song",
           stroke: "album_name",
-          thresholds: d3.timeDay
+          thresholds: d3.timeDay,
+          sort: { y: "stroke" }
         }
       )
     )
