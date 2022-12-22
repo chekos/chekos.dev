@@ -1,6 +1,7 @@
 # Observable Plot test
 
 ```{ojs}
+//| echo: false
 data = d3
   .csv(
     "https://raw.githubusercontent.com/chekos/git-scraping-spotify/main/markdown/tracks_long.csv",
@@ -19,39 +20,32 @@ data = d3
       uri: d.track_uri
     }))
   )
-```
-
-```{ojs}
 Inputs.table(data)
-```
-
-```{ojs}
 artists = d3.group(data, (d) => d.artist)
-```
 
-```{ojs}
 viewof artist = Inputs.select(artists, { label: "Artist: " })
 ```
 
 ```{ojs}
 Plot.plot({
+  x: { type: "time" },
+  y: { label: "" },
+  grid: true,
+  color: { legend: true },
   marks: [
-    Plot.barX(
+    Plot.dot(
       artist,
-      Plot.groupY(
-        { x: "count" },
+      Plot.binX(
+        { r: "count" },
         {
+          x: "played_date",
           y: "song",
-          sort: { y: "x", reverse: true, limit: 10 },
-          fill: "album_name"
+          stroke: "album_name",
+          thresholds: d3.timeDay
         }
       )
-    ),
-    Plot.ruleX([0])
+    )
   ],
-  color: {
-    legend: true
-  },
   marginLeft: 150
 })
 ```
