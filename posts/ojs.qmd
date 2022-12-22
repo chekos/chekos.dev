@@ -17,7 +17,8 @@ data = d3
       album_type: d.album_type,
       popularity: d.track_popularity,
       duration_ms: d.track_duration_ms,
-      uri: d.track_uri
+      uri: d.track_uri,
+      played_date: d3.timeFormat("%Y-%m-%d")(d.played_at)
     }))
   )
 Inputs.table(data)
