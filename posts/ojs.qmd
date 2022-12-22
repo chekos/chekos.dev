@@ -28,6 +28,29 @@ viewof artist = Inputs.select(artists, { label: "Artist: " })
 
 ```{ojs}
 Plot.plot({
+  marks: [
+    Plot.barX(
+      artist,
+      Plot.groupY(
+        { x: "count" },
+        {
+          y: "song",
+          sort: { y: "x", reverse: true, limit: 10 },
+          fill: "album_name"
+        }
+      )
+    ),
+    Plot.ruleX([0])
+  ],
+  color: {
+    legend: true
+  },
+  marginLeft: 150
+})
+```
+
+```{ojs}
+Plot.plot({
   x: { type: "time" },
   y: { label: "" },
   grid: true,
