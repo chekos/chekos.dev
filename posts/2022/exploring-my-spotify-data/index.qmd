@@ -1,0 +1,149 @@
+---
+date: 2022-12-24
+title: Exploring My Spotify Data
+---
+
+# Exploring my spotify data
+
+```{ojs}
+//| echo: false
+raw_data = d3.csv(
+  "https://raw.githubusercontent.com/chekos/git-scraping-spotify/main/markdown/tracks.csv",
+  d3.autoType
+)
+// Extract the desired information from each timestamp
+data = raw_data.map((d) => {
+  const tzdate = Temporal.Instant.from(
+    d.played_at.toISOString()
+  ).toZonedDateTimeISO("America/Los_Angeles"); // date in localized timezone
+  const date = new Date(tzdate.epochMilliseconds); // Javascript Date object, stores date in browser's local timezone
+  const hour = tzdate.hour;
+  const dayOfMonth = tzdate.day;
+  const day = weekdays[tzdate.dayOfWeek + -1];
+  const weekend = tzdate.dayOfWeek > 5 ? "Weekend" : "Weekday";
+  const week = tzdate.weekOfYear;
+  const month = months[tzdate.month - 1];
+  const quarter =
+    tzdate.month < 4
+      ? "Q1: Jan - Mar"
+      : tzdate.month < 7
+      ? "Q2: Apr - Jun"
+      : tzdate.month < 10
+      ? "Q3: Jul - Sep"
+      : "Q4: Oct - Dec";
+  const played_at = d.played_at;
+  const artists = d.track_artists;
+  const song = d.track_name;
+  const album_artist = d.album_artist_name;
+  const album_name = d.album_name;
+  const album_type = d.album_type;
+  const popularity = d.track_popularity;
+  const duration_ms = d.track_duration_ms;
+  const uri = d.track_uri;
+  return {
+    date,
+    hour,
+    day,
+    weekend,
+    week,
+    month,
+    quarter,
+    dayOfMonth,
+    played_at,
+    artists,
+    song,
+    album_artist,
+    album_name,
+    album_type,
+    popularity,
+    duration_ms,
+    uri
+  };
+})
+
+months =  ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+// Load the Temporal API using a Polyfill
+Temporal = {
+  const TemporalLib = await require("@js-temporal/polyfill@0.3.0");
+  return TemporalLib.Temporal;
+}
+domains = ({
+  month: [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ],
+  day: [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ]
+})
+```
+
+```{ojs}
+//| echo: false
+Inputs.table(data)
+```
+
+## Frequency
+```{ojs}
+Plot.plot({ marks: [Plot.tickX(data, { x: "date", strokeOpacity: 0.1 })] })
+```
+
+## Time of day
+```{ojs}
+Plot.plot({
+  marginLeft: 100,
+  y: { label: "", domain: weekdays, line: true },
+  x: { label: "", line: true, ticks: false },
+  color: { scheme: "purples" },
+  marks: [
+    Plot.cell(data, Plot.group({ fill: "count" }, { x: "hour", y: "day" })),
+    Plot.text(data, Plot.group({ text: "count" }, { x: "hour", y: "day" }))
+  ]
+})
+```
+
+### By month
+```{ojs}
+Plot.plot({
+  facet: { data: data, y: "month", marginLeft: 100, marginRight: 100 },
+  fy: { label: "", domain: months.slice(7) },
+  marginLeft: 100,
+  y: { label: "", domain: weekdays },
+  x: { label: "" },
+  color: { scheme: "purples" },
+  marks: [
+    Plot.frame(),
+    Plot.cell(data, Plot.group({ fill: "count" }, { x: "hour", y: "day" })),
+    Plot.text(data, Plot.group({ text: "count" }, { x: "hour", y: "day" }))
+  ]
+})
+```
+
+```{ojs}
+Plot.plot({
+  facet: { data: data, y: "month", marginLeft: 100 },
+  marks: [
+    Plot.dot(
+      data,
+      Plot.binX({ r: "count" }, { x: "dayOfMonth", fillOpacity: 0.1 })
+    )
+  ]
+})
+```
