@@ -2,7 +2,7 @@
 categories:
 - dataviz
 - hip hop
-- hip hop mexicano
+- archived
 date: 2020-02-15
 description: Antes de crear tacosdedatos intenté crear un blog de Hip Hop Latino-americano
   donde iba a analizar de una manera cuantitativa la calidad de discos y canciones.

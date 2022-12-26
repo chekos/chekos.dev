@@ -1,7 +1,6 @@
 ---
 categories:
-- programming
-- data
+- sql
 - datasette
 - python
 date: 2020-06-25
