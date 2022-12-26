@@ -1,0 +1,218 @@
+# My Spotify Top 5
+
+```{ojs}
+//| echo: false
+data = await d3
+  .json(
+    "https://raw.githubusercontent.com/chekos/my-recently-played-tracks/main/tracks.json"
+  )
+  .then((data) =>
+    data.map((d) => {
+      const playedAt = new Date(d.played_at);
+      const tzdate = Temporal.Instant.from(d.played_at).toZonedDateTimeISO(
+        "America/Los_Angeles"
+      ); // date in localized timezone
+      const date = new Date(tzdate.epochMilliseconds); // Javascript Date object, stores date in browser's local timezone
+      const hour = tzdate.hour;
+      const minute = tzdate.minute;
+      const dayOfMonth = tzdate.day;
+      const day = weekdays[tzdate.dayOfWeek + -1];
+      const weekend = tzdate.dayOfWeek > 5 ? "Weekend" : "Weekday";
+      const week = tzdate.weekOfYear;
+      const month = months[tzdate.month - 1];
+      const quarter =
+        tzdate.month < 4
+          ? "Q1: Jan - Mar"
+          : tzdate.month < 7
+          ? "Q2: Apr - Jun"
+          : tzdate.month < 10
+          ? "Q3: Jul - Sep"
+          : "Q4: Oct - Dec";
+      const timeOfDay =
+        tzdate.hour < 5
+          ? "Late night"
+          : tzdate.hour < 10
+          ? "Early morning"
+          : tzdate.hour < 13
+          ? "Morning"
+          : tzdate.hour < 17
+          ? "Afternoon"
+          : tzdate.hour < 20
+          ? "Late afternoon"
+          : "Evening";
+      const context = d.context;
+      const track = d.track;
+      const artistsNames = d.track.artists.map((v) => v.name);
+      return {
+        date,
+        hour,
+        minute,
+        day,
+        weekend,
+        week,
+        month,
+        quarter,
+        dayOfMonth,
+        timeOfDay,
+        track,
+        playedAt,
+        context,
+        artistsNames
+      };
+    })
+  )
+  
+filtered_data = data.filter((d) => d.artistsNames.includes(selected_artist))
+
+// appendix
+weekdays = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday"
+]
+months =  ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+hours = [...Array(24).keys()]
+// Load the Temporal API using a Polyfill
+Temporal = {
+  const TemporalLib = await require("@js-temporal/polyfill@0.3.0");
+  return TemporalLib.Temporal;
+}
+domains = ({
+  month: months,
+  day: weekdays,
+  timeOfDay: timeOfDay,
+  hour: hours
+})
+
+// artists = data.flatMap((d) => d.artistsNames)
+artists = ["La Plebada", "La Banda Baston", "Yoga Fire", "Aleman", "Fntxy"]
+```
+
+
+## By Artist
+```{ojs}
+//| echo: false
+viewof selected_artist = Inputs.select(artists, { unique: true, sort: true })
+```
+
+```{ojs}
+Plot.plot({
+  x: { domain: domains.hour },
+  color: { scheme: "purples" },
+  padding: 0,
+  marks: [
+    Plot.frame(),
+    Plot.cell(
+      filtered_data,
+      Plot.groupX({ fill: "count" }, { x: "hour", stroke: "black" })
+    ),
+    Plot.text(filtered_data, Plot.groupX({ text: "count" }, { x: "hour" }))
+  ]
+})
+```
+
+
+```{ojs}
+Plot.plot({
+  marks: [
+    Plot.dot(
+      filtered_data,
+      Plot.binX(
+        { r: "count" },
+        {
+          x: "playedAt",
+          thresholds: d3.timeHour,
+          stroke: "purple",
+          strokeOpacity: 0.3
+        }
+      )
+    )
+  ]
+})
+```
+
+
+```{ojs}
+Plot.tickX(filtered_data, { x: "playedAt", strokeOpacity: 0.3 }).plot({
+  facet: {
+    data: filtered_data,
+    x: "hour",
+    y: "day",
+    marginLeft: 80
+  },
+  fy: {
+    domain: domains.day,
+    label: ""
+  },
+  width,
+  fx: { label: "" },
+  marks: [
+    Plot.frame(),
+    Plot.rect(
+      filtered_data,
+      Plot.groupZ(
+        { fill: "count" },
+        { fill: "playedAt", fillOpacity: 0.6, thresholds: d3.timeHour }
+      )
+    )
+  ],
+  color: {
+    scheme: "purples"
+  }
+})
+```
+
+
+```{ojs}
+Plot.plot({
+  facet: { data: filtered_data, y: "timeOfDay", marginLeft: 100 },
+  fy: { domain: domains.timeOfDay, label: "" },
+  marks: [
+    Plot.dot(
+      filtered_data,
+      Plot.binX(
+        { r: "count" },
+        {
+          x: "playedAt",
+          thresholds: d3.timeHour,
+          strokeOpacity: 0.4,
+          stroke: "timeOfDay"
+        }
+      )
+    )
+  ]
+})
+```
+
+
+```{ojs}
+Plot.plot({
+  x: { domain: domains.day, label: "" },
+  color: { scheme: "purples" },
+  padding: 0.05,
+  marks: [
+    Plot.cell(
+      filtered_data,
+      Plot.groupX(
+        { fill: "count" },
+        {
+          x: "day"
+        }
+      )
+    ),
+    Plot.text(
+      filtered_data,
+      Plot.groupX(
+        { text: "proportion" },
+        {
+          x: "day"
+        }
+      )
+    )
+  ]
+})
+```
