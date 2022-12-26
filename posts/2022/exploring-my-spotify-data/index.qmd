@@ -1,6 +1,7 @@
 ---
 date: 2022-12-24
 title: Exploring My Spotify Data
+draft: true
 ---
 
 # Exploring my spotify data

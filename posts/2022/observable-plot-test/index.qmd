@@ -2,6 +2,7 @@
 date: 2022-12-21
 title: Observable Plot Quarto Test
 categories: [observable, js]
+draft: true
 ---
 
 # Observable Plot test
