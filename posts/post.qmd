@@ -75,6 +75,14 @@ weekdays = [
   "Sunday"
 ]
 months =  ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+timeOfDay = [
+  "Late night",
+  "Early morning",
+  "Morning",
+  "Afternoon",
+  "Late afternoon",
+  "Evening"
+]
 hours = [...Array(24).keys()]
 // Load the Temporal API using a Polyfill
 Temporal = {
