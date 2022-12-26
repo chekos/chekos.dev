@@ -1,6 +1,9 @@
 ---
+date: 2022-12-26
 draft: true
+title: My Spotify Top 5 For 2022
 ---
+
 # My Spotify Top 5 for 2022
 
 ```{ojs}
