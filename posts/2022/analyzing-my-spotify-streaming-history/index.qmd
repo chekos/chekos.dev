@@ -263,7 +263,7 @@ Plot.plot({
 //| echo: false
 Plot.plot({
   width,
-  x: { ticks: 2, line: true },
+  x: { ticks: 2 },
   facet: { data: data, x: "day" },
   fx: { domain: domains.day, label: "", line: true },
   padding: 0,
