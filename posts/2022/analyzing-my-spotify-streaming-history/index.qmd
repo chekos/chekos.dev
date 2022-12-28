@@ -1,0 +1,445 @@
+---
+categories:
+- data
+- observable
+- spotify
+date: 2022-12-28
+title: Analyzing My Spotify Streaming History
+execute: 
+  echo: false
+---
+
+```{ojs}
+//| echo: false
+data = await d3
+  .json(
+    "https://raw.githubusercontent.com/chekos/my-recently-played-tracks/main/tracks.json"
+  )
+  .then((data) =>
+    data.map((d) => {
+      const playedAt = new Date(d.played_at);
+      const tzdate = Temporal.Instant.from(d.played_at).toZonedDateTimeISO(
+        "America/Los_Angeles"
+      ); // date in localized timezone
+      const date = new Date(tzdate.epochMilliseconds); // Javascript Date object, stores date in browser's local timezone
+      const time = new Date(tzdate.epochMilliseconds % (24 * 60 * 60 * 1000)); // "Truncate" year, month, day
+      const hour = tzdate.hour;
+      const minute = tzdate.minute;
+      const dayOfMonth = tzdate.day;
+      const day = weekdays[tzdate.dayOfWeek + -1];
+      const weekend = tzdate.dayOfWeek > 5 ? "Weekend" : "Weekday";
+      const week = tzdate.weekOfYear;
+      const month = months[tzdate.month - 1];
+      const quarter =
+        tzdate.month < 4
+          ? "Q1: Jan - Mar"
+          : tzdate.month < 7
+          ? "Q2: Apr - Jun"
+          : tzdate.month < 10
+          ? "Q3: Jul - Sep"
+          : "Q4: Oct - Dec";
+      const timeOfDay =
+        tzdate.hour < 5
+          ? "Late night"
+          : tzdate.hour < 10
+          ? "Early morning"
+          : tzdate.hour < 13
+          ? "Morning"
+          : tzdate.hour < 17
+          ? "Afternoon"
+          : tzdate.hour < 20
+          ? "Late afternoon"
+          : "Evening";
+      const context = d.context;
+      const track = d.track;
+      const artistsNames = d.track.artists.map((v) => v.name);
+      return {
+        date,
+        time,
+        hour,
+        minute,
+        day,
+        weekend,
+        week,
+        month,
+        quarter,
+        dayOfMonth,
+        timeOfDay,
+        track,
+        playedAt,
+        context,
+        artistsNames
+      };
+    })
+  )
+  
+
+// appendix
+weekdays = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday"
+]
+months =  ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+timeOfDay = [
+  "Late night",
+  "Early morning",
+  "Morning",
+  "Afternoon",
+  "Late afternoon",
+  "Evening"
+]
+hours = [...Array(24).keys()]
+// Load the Temporal API using a Polyfill
+Temporal = {
+  const TemporalLib = await require("@js-temporal/polyfill@0.3.0");
+  return TemporalLib.Temporal;
+}
+domains = ({
+  month: months,
+  day: weekdays,
+  timeOfDay: timeOfDay,
+  hour: hours
+})
+
+// artists = data.flatMap((d) => d.artistsNames)
+artists = ["La Plebada", "La Banda Baston", "Yoga Fire", "Aleman", "Fntxy", "Gera MX", "Cozy Cuz", "Charles Ans", "Remik Gonzalez", "Santa Fe Klan"]
+```
+
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  height: 400,
+  width,
+  axis: null,
+  x: {
+    axis: "top"
+  },
+  y: {
+    axis: null,
+    domain: [0, 20]
+  },
+  fy: {
+    axis: "left",
+    label: null,
+    domain: domains.day,
+    padding: 0.05
+  },
+  facet: {
+    data: data,
+    y: "day",
+    marginLeft: 100
+  },
+  marks: [
+    Plot.areaY(
+      data,
+      Plot.binX(
+        { y: "count" },
+        {
+          x: "time",
+          fillOpacity: 0.2,
+          thresholds: d3.timeMinute.every(15),
+          curve: "basis"
+        }
+      )
+    ),
+    Plot.lineY(
+      data,
+      Plot.binX(
+        { y: "count" },
+        {
+          x: "time",
+          strokeWidth: 1,
+          thresholds: d3.timeMinute.every(15),
+          curve: "basis"
+        }
+      )
+    )
+  ]
+})
+
+```
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  width,
+  y: { domain: domains.day, label: "" },
+  x: { ticks: 3 },
+  facet: { data: data, x: "month" },
+  fx: { domain: domains.month.slice(7), label: "" },
+  marginLeft: 100,
+  marks: [
+    Plot.frame(),
+    Plot.tickX(data, {
+      x: "time",
+      y: "day",
+      strokeOpacity: 0.1
+    })
+  ]
+})
+```
+
+
+```{ojs}
+Plot.plot({
+  width,
+  y: { domain: domains.day, label: "" },
+  x: { ticks: 3 },
+  facet: { data: data, x: "month" },
+  fx: { domain: domains.month.slice(7), label: "" },
+  marginLeft: 100,
+  marks: [
+    Plot.frame(),
+    Plot.dotX(
+      data,
+      Plot.binX(
+        { r: "count" },
+        {
+          x: "time",
+          y: "day",
+          strokeOpacity: 0.4,
+          thresholds: d3.timeMinute.every(20)
+        }
+      )
+    )
+  ]
+})
+```
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  width,
+  y: { domain: domains.month.slice(7), label: "" },
+  x: { ticks: 1 },
+  facet: { data: data, x: "weekend" },
+  fx: { label: "" },
+  marginLeft: 100,
+  marks: [
+    Plot.frame(),
+    Plot.tickX(data, {
+      x: "time",
+      y: "month",
+      strokeOpacity: 0.1
+    })
+  ]
+})
+```
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  width,
+  x: { ticks: 2, line: true },
+  facet: { data: data, x: "day" },
+  fx: { domain: domains.day, label: "", line: true },
+  marginLeft: 100,
+  padding: 0,
+  marks: [
+    Plot.frame(),
+    Plot.tickX(data, {
+      x: "time",
+      strokeOpacity: 0.1
+    })
+  ]
+})
+```
+
+
+### Per artist
+
+```{ojs}
+//| echo: false
+viewof top5Artist = Inputs.select(artists, { unique: true, sort: true })
+artistData = data.filter((d) => d.artistsNames.includes(top5Artist))
+```
+***
+```{ojs}
+md`### ${top5Artist}`
+```
+```{ojs}
+//| echo: false
+Plot.plot({
+  width,
+  padding: 0,
+  marks: [
+    Plot.frame(),
+    Plot.tickX(
+      artistData,
+      Plot.binX(
+        { strokeOpacity: "count" },
+        {
+          x: "time",
+          thresholds: d3.timeMinute
+        }
+      )
+    )
+  ]
+})
+```
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  width,
+  x: { ticks: 2, line: true },
+  facet: { data: artistData, x: "day" },
+  fx: { domain: domains.day, label: "", line: true },
+  padding: 0,
+  marks: [
+    Plot.frame(),
+    Plot.tickX(
+      artistData,
+      Plot.binX(
+        { strokeOpacity: "count" },
+        {
+          x: "time",
+          thresholds: d3.timeMinute
+          // stroke: "timeOfDay"
+        }
+      )
+    )
+  ]
+})
+```
+
+***
+```{ojs}
+//| echo: false
+md`### ${top5Artist}`
+```
+```{ojs}
+//| echo: false
+Plot.plot({
+  width,
+  x: { label: "" },
+  // r: { range: [1, 10] },
+  marks: [
+    Plot.dot(
+      artistData,
+      Plot.binX(
+        { r: "count" },
+        {
+          x: "time",
+          thresholds: d3.timeMinute.every(5),
+          stroke: "purple",
+          strokeOpacity: 0.3
+        }
+      )
+    )
+  ]
+})
+```
+***
+```{ojs}
+//| echo: false
+Plot.plot({
+  width,
+  x: { ticks: 2 },
+  facet: { data: artistData, x: "day" },
+  fx: { domain: domains.day, label: "" },
+  padding: 0,
+  marks: [
+    Plot.dot(
+      artistData,
+      Plot.binX(
+        { r: "count" },
+        {
+          x: "time",
+          thresholds: d3.timeMinute.every(30),
+          stroke: "purple",
+          strokeOpacity: 0.3
+          // stroke: "timeOfDay"
+        }
+      )
+    )
+  ]
+})
+```
+***
+```{ojs}
+//| echo: false
+Plot.plot({
+  width,
+  x: { label: "" },
+  marks: [
+    Plot.dot(
+      artistData,
+      Plot.binX(
+        { r: "count" },
+        {
+          x: "playedAt",
+          thresholds: d3.timeHour,
+          stroke: "purple",
+          strokeOpacity: 0.3
+        }
+      )
+    )
+  ]
+})
+```
+
+
+***
+```{ojs}
+md`### ${top5Artist}`
+```
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  width,
+  facet: { data: artistData, y: "timeOfDay", marginLeft: 100 },
+  fy: { domain: domains.timeOfDay, label: "" },
+  x: { label: "" },
+  marks: [
+    Plot.dot(
+      artistData,
+      Plot.binX(
+        { r: "count" },
+        {
+          x: "playedAt",
+          thresholds: d3.timeHour,
+          strokeOpacity: 0.4,
+          stroke: "purple"
+        }
+      )
+    )
+  ]
+})
+```
+
+```{ojs}
+md`### ${top5Artist}`
+```
+
+```{ojs}
+Plot.plot({
+  width,
+  x: { label: "" },
+  facet: { data: artistData, x: "month" },
+  fx: { label: "", domain: domains.month.slice(7) },
+  padding: 0,
+  marks: [
+    Plot.dot(
+      artistData,
+      Plot.binY(
+        { r: "count" },
+        {
+          y: "time",
+          x: "dayOfMonth",
+          thresholds: d3.timeMinute.every(30),
+          stroke: "purple",
+          strokeOpacity: 0.5
+        }
+      )
+    )
+  ]
+})
+```
