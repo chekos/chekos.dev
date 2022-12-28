@@ -238,6 +238,26 @@ Plot.plot({
 ```
 
 ```{ojs}
+Plot.plot({
+  width,
+  padding: 0,
+  marks: [
+    Plot.frame(),
+    Plot.tickX(
+      data,
+      Plot.binX(
+        { strokeOpacity: "count" },
+        {
+          x: "time",
+          thresholds: d3.timeMinute
+        }
+      )
+    )
+  ]
+})
+```
+
+```{ojs}
 //| echo: false
 Plot.plot({
   width,
@@ -252,6 +272,27 @@ Plot.plot({
       x: "time",
       strokeOpacity: 0.1
     })
+  ]
+})
+```
+
+```{ojs}
+Plot.plot({
+  width,
+  padding: 0,
+  x: { label: "" },
+  marks: [
+    Plot.frame(),
+    Plot.tickX(
+      data,
+      Plot.binX(
+        { strokeOpacity: "count" },
+        {
+          x: "playedAt",
+          thresholds: d3.timeMinute
+        }
+      )
+    )
   ]
 })
 ```
