@@ -237,6 +237,8 @@ Plot.plot({
 })
 ```
 
+## Aug-Dec 2022
+
 ```{ojs}
 Plot.plot({
   width,
@@ -264,7 +266,6 @@ Plot.plot({
   x: { ticks: 2, line: true },
   facet: { data: data, x: "day" },
   fx: { domain: domains.day, label: "", line: true },
-  marginLeft: 100,
   padding: 0,
   marks: [
     Plot.frame(),
