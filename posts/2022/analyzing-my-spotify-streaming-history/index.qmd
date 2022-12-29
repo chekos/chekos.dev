@@ -356,6 +356,27 @@ Plot.plot({
 })
 ```
 
+```{ojs}
+Plot.plot({
+  width,
+  padding: 0,
+  x: { label: "" },
+  marks: [
+    Plot.frame(),
+    Plot.tickX(
+      artistData,
+      Plot.binX(
+        { strokeOpacity: "count" },
+        {
+          x: "playedAt",
+          thresholds: d3.timeMinute
+        }
+      )
+    )
+  ]
+})
+```
+
 ***
 ```{ojs}
 //| echo: false
