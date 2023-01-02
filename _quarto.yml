@@ -3,6 +3,7 @@ project:
 
 website:
   title: "chekos' personal blog"
+  description: "chekos' blog. data stuff and more."
   site-url: https://chekos.dev
   repo-url: https://github.com/chekos/chekos.dev
   reader-mode: true
