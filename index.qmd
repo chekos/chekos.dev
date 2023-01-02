@@ -2,7 +2,7 @@
 title: ""
 listing:
   feed: true
-  contents: posts
+  contents: posts/**/*.qmd
   sort: "date desc"
   type: table
   categories: true
