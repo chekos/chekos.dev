@@ -46,7 +46,7 @@ format:
     title-block-categories: false
     title-block-banner: false
 
-self-contained: true 
+# self-contained: true 
 jupyter: python3
 execute: 
   freeze: true
