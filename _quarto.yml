@@ -31,6 +31,10 @@ website:
       - icon: instagram
         aria-label: instagram
         href: https://instagram.com/chekos.visuals
+      - icon: rss
+        aria-label: rss
+        href: index.xml
+        
 format:
   html:
     theme:
@@ -46,7 +50,6 @@ format:
     title-block-categories: false
     title-block-banner: false
 
-# self-contained: true 
 jupyter: python3
 execute: 
   freeze: true
