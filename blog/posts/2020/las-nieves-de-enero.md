@@ -1,4 +1,5 @@
 ---
+draft: false
 categories:
 - personal
 date: 2020-02-10
@@ -8,17 +9,16 @@ description: Si me sigues en las redes sociales tal vez conozcas de la comunidad
   prácticas. Contenido sobre técnicas y tendencias en el mundo de la tecnología que
   parecen quedarse en el mundo angloparlante por mucho tiempo antes de llegar al mundo
   hispanohablante.
-title: Ya se fueron las nieves de enero
 ---
 
 # Ya se fueron las nieves de enero
 
-> Cuando todo va mal es cuando más me motivo / Respiro mejor en éste ambiente nocivo / Esto para el rap es lo más nutritivo / Es todo lo que soy por eso escribo.
+> _Cuando todo va mal es cuando más me motivo / Respiro mejor en éste ambiente nocivo / Esto para el rap es lo más nutritivo / Es todo lo que soy por eso escribo._
 - Nocivos, Faruz Feet & Proof
 
 ## ¿Por qué haría otro blog?
 Si me sigues en las redes sociales tal vez conozcas de la comunidad [**tacosdedatos**](https://tacosdedatos.com/) que comencé a inicios del 2019. La idea de **tacosdedatos** es crear contenido en español. Contenido sobre el análisis y la visualización de datos. Contenido sobre mejores prácticas. Contenido sobre técnicas y tendencias en el mundo de la tecnología que parecen _quedarse_ en el mundo angloparlante por mucho tiempo antes de llegar al mundo hispanohablante. 
-
+<!-- more -->
 **tacosdedatos** ha crecido mucho en este último año. Tenemos más de 3,400 seguidores en Twitter, miles de visitas al sitio web y lo más importante: muchas personas participando en la conversación del análisis / visualización de datos en español. Cada semana recibo por lo menos un mensaje directo en twitter o un correo con dudas de cómo comenzar en Python o R o como resolver X problema con su código o como crear X visualización. 
 Tal vez a muchas personas no les impresione hablar con un extraño pidiendo ayuda pero eso es lo que me llena de ganas de seguir haciendo lo que hago. 
 

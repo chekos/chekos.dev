@@ -1,15 +1,16 @@
 ---
+draft: false
 categories:
 - sql
 - datasette
 - python
 date: 2020-06-25
-description: Proporcionar los datos es el primer paso, pero para que sean utilizables
-  y accesibles para la mayoría de las personas, no podemos simplemente publicar datos.
-title: Haciendo datos abiertos más accesibles con datasette
+description: Proporcionar los datos es el primer paso, pero para que sean utilizables y accesibles para la mayoría de las personas, no podemos simplemente publicar datos.
 ---
+# Haciendo datos abiertos más accesibles con datasette
 
 California recientemente liberó datos sobre las detenciones hechas por oficiales de las 8 agencias más grandes del estado. Estos datos cubren los meses de julio a diciembre del 2018. Esta fue la primera ola de divulgación de datos que entrará en vigencia en los años siguientes. Los datos cubrieron más de 1.8 millones de paradas en todo el estado. Si bien este es un paso en la dirección correcta, un solo archivo `.csv` de alrededor de 640 megabytes con más de 1.8 millones de filas y más de 140 columnas podría ser intimidante para algunas personas que se beneficiarían de la exploración de estos datos: líderes locales, periodistas, activistas y organizadores, por nombrar algunos.
+<!-- more -->
 
 El tercer principio de la [carta internacional de datos abiertos](https://opendatacharter.net/principles-es/) es que los datos deben ser accesibles y utilizables.
 
