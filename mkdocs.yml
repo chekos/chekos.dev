@@ -57,3 +57,6 @@ nav:
   - index.md
 
 repo_url: https://github.com/chekos/chekos.dev
+site_author: chekos
+site_description: chekos' weblog
+site_url: https://chekos.dev/
