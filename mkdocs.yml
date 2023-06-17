@@ -1,0 +1,59 @@
+site_name: chekos' blog
+theme:
+  name: material
+  features:
+    - header.autohide
+    - navigation.tracking
+    - navigation.sections
+  icon:
+    repo: fontawesome/brands/git-alt
+  palette:
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      primary: pink
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: pink
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to system preference
+
+docs_dir: blog
+
+plugins:
+  - search:
+      lang:
+        - en
+        - es
+  - meta
+  - blog:
+      blog_dir: .
+      blog_toc: true
+      post_url_date_format: yyyy/MM
+      post_slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - tags
+  - rss:
+      match_path: blog/posts/.*
+      date_from_meta:
+        as_creation: date
+      categories:
+        - categories
+        - tags
+
+nav:
+  - index.md
+
+repo_url: https://github.com/chekos/chekos.dev
