@@ -1,15 +1,18 @@
 ---
-draft: false
 categories:
-- sql
-- datasette
-- python
+  - data projects
+tags:
+  - sql
+  - datasette
+  - python
 date: 2020-06-25
 description: Proporcionar los datos es el primer paso, pero para que sean utilizables y accesibles para la mayoría de las personas, no podemos simplemente publicar datos.
 ---
+
 # Haciendo datos abiertos más accesibles con datasette
 
 California recientemente liberó datos sobre las detenciones hechas por oficiales de las 8 agencias más grandes del estado. Estos datos cubren los meses de julio a diciembre del 2018. Esta fue la primera ola de divulgación de datos que entrará en vigencia en los años siguientes. Los datos cubrieron más de 1.8 millones de paradas en todo el estado. Si bien este es un paso en la dirección correcta, un solo archivo `.csv` de alrededor de 640 megabytes con más de 1.8 millones de filas y más de 140 columnas podría ser intimidante para algunas personas que se beneficiarían de la exploración de estos datos: líderes locales, periodistas, activistas y organizadores, por nombrar algunos.
+
 <!-- more -->
 
 El tercer principio de la [carta internacional de datos abiertos](https://opendatacharter.net/principles-es/) es que los datos deben ser accesibles y utilizables.
@@ -20,7 +23,7 @@ En este tutorial, comparto una forma de hacerlo: usando **datasette**, una _"her
 
 Tomamos los datos de detención policial lanzados recientemente por California, los limpiamos y transformamos a como sea necesario, y desplegamos una instancia de **datasette** en Heroku.
 
-## prólogo  
+## prólogo
 
 La idea de explorar este conjunto de datos vino al escuchar el episodio del 3 de marzo del 2020 del podcast **Pod Save the People**. (minuto 4:12)
 
@@ -34,7 +37,7 @@ En el episodio, Sam Sinyangwe menciona que las personas negras y de color están
 
 Esta gran disparidad racial es desgarradora pero no es sorpresa.
 
-Cuando comencé a trabajar con el conjunto de datos me pareció un tanto íncomodo, no era fácil. El tamaño del conjunto de los datos hace que sea díficil trabajar con él para aquellas personas que no analizan datos programáticamente; ya sea con recursos pagados como stata y sas o gratuitos como python y R. 
+Cuando comencé a trabajar con el conjunto de datos me pareció un tanto íncomodo, no era fácil. El tamaño del conjunto de los datos hace que sea díficil trabajar con él para aquellas personas que no analizan datos programáticamente; ya sea con recursos pagados como stata y sas o gratuitos como python y R.
 
 Esta información no esta diseñada para ser explorada fácilmente pero existen herramientas que pueden ayudar con eso.
 
@@ -42,7 +45,7 @@ Esta información no esta diseñada para ser explorada fácilmente pero existen 
 
 ## sobre los datos
 
-![**source:** <https://openjustice.doj.ca.gov/data>](https://cdn-images-1.medium.com/max/800/1*tDeVEZl_Dbe0DdwkCMPAKQ.png) 
+![**source:** <https://openjustice.doj.ca.gov/data>](https://cdn-images-1.medium.com/max/800/1*tDeVEZl_Dbe0DdwkCMPAKQ.png)
 
 El conjunto de datos está compuesto por un archivo `.csv` de 641.4 MB que contiene 1.8 millones de filas y 143 columnas. Cada parada tiene un `DOJ_RECORD_ID` único y cada persona detenida tiene un `PERSON_NUMBER`. En total, hay 1,708,377 paradas en este conjunto de datos que involucran a 1,800,054 personas.
 
@@ -52,18 +55,18 @@ El conjunto de datos incluye información básica sobre cada parada (como duraci
 
 Esta es la Ola I de una serie de datos de la _Racial and Identity Profiling Act_ (RIPA) que se lanzarán en los años siguientes. Los datos publicados sobre esta ola pertenecen a las 8 agencias de aplicación de la ley (LEA, por sus siglas en inglés) más grandes de California (las que emplean a más de 1,000 oficiales). Estas LEA (y su parte de las observaciones totales) son:
 
-|   _Law enforcement agency_ (LEA)  |     N     |    %   |
-|:----------------------------------|:---------:|:------:|
-|     California Highway Patrol     | 1,033,421 | 57.4%  |
-|    Los Angeles Police Department  |   336,681 | 18.7%  |
-|  Los Angeles Sheriff Department   |   136,635 |  7.59% | 
-|     San Diego Police Department   |    89,455 |  4.97% |
-| San Bernardino Sheriff Department |    62,433 |  3.47% |
-|   San Francisco Police Department |    56,409 |  3.14% |
-|    Riverside Sheriff Department   |    44.505 |  2.47% |
-|    San Diego Sheriff Department   |    40,515 |  2.25% |
+| _Law enforcement agency_ (LEA)     |     N      |   %   |
+| :--------------------------------- | :--------: | :---: |
+| California Highway Patrol          |  1,033,421 | 57.4% |
+| Los Angeles Police Department      |   336,681  | 18.7% |
+| Los Angeles Sheriff Department     |   136,635  | 7.59% |
+| San Diego Police Department        |    89,455  | 4.97% |
+| San Bernardino Sheriff Department  |    62,433  | 3.47% |
+| San Francisco Police Department    |    56,409  | 3.14% |
+| Riverside Sheriff Department       |    44.505  | 2.47% |
+| San Diego Sheriff Department       |    40,515  | 2.25% |
 
-[README](https://data-openjustice.doj.ca.gov/sites/default/files/dataset/2020-01/RIPA%20Dataset%20Read%20Me%2020200106.pdf) | [Informe Anual 2020](https://oag.ca.gov/sites/all/files/agweb/pdfs/ripa/ripa-board-report-2020.pdf) 
+[README](https://data-openjustice.doj.ca.gov/sites/default/files/dataset/2020-01/RIPA%20Dataset%20Read%20Me%2020200106.pdf) | [Informe Anual 2020](https://oag.ca.gov/sites/all/files/agweb/pdfs/ripa/ripa-board-report-2020.pdf)
 
 ## sobre datasette
 
@@ -75,11 +78,11 @@ Puedes encontrar ejemplos de **datasette**s públicos en el [wiki del repositori
 
 La página principal muestra la licencia y la fuente de la base de datos. También provee acceso rápido a algunas de sus tablas.
 
-![](https://cdn-images-1.medium.com/max/800/1*y1-FwGc2JhX_1ocHz7TXBA.png) 
+![](https://cdn-images-1.medium.com/max/800/1*y1-FwGc2JhX_1ocHz7TXBA.png)
 
 Si haces clic en el nombre de la base de datos, proporcionará una vista de todas sus tablas y un cuadro de texto para que ejecute consultas SQL personalizadas. Esta es una de las características que hace que **datasette** sea una herramienta tan poderosa.
 
-![](https://cdn-images-1.medium.com/max/800/1*7QZ3wF9k2TbMd79dauftng.png) 
+![](https://cdn-images-1.medium.com/max/800/1*7QZ3wF9k2TbMd79dauftng.png)
 
 Si haces clic en una de las tablas, verás las facetas sugeridas, un botón de filtro fácil de usar, un enlace JSON y CSV que proporcionará la tabla como uno de esos formatos (esto significa que puede usar esto como API) y una descripción de la tabla. En este caso, la descripción contiene una tabla HTML con encabezados y definiciones.
 
@@ -87,25 +90,25 @@ Si haces clic en una de las tablas, verás las facetas sugeridas, un botón de f
 
 Si haces clic en el botón "View and edit SQL", volverás a tener acceso a un cuadro de texto para escribir sus propias consultas.
 
-![](https://cdn-images-1.medium.com/max/800/1*e_nW20lBbSPRAgXLYkgYng.png) 
+![](https://cdn-images-1.medium.com/max/800/1*e_nW20lBbSPRAgXLYkgYng.png)
 
 **datasette** es parte de un ecosistema de herramientas y _plugins_. Puedes agregar el _plugin_ **datasette-vega** ([repo](https://github.com/simonw/datasette-vega)) para agregar visualizaciones interactivas de la tabla (hechas con [altair](https://altair-viz.github.io/))
 
-![](https://cdn-images-1.medium.com/max/800/1*zZ7i8wiP7yBc-cKx7tPW8w.png) 
+![](https://cdn-images-1.medium.com/max/800/1*zZ7i8wiP7yBc-cKx7tPW8w.png)
 
 Así es como se ve un sitio web básico de **datasette** pero **datasette** es altamente personalizable. Tomemos, por ejemplo, el **datasette** de The Baltimore Sun para que las personas exploren los registros de salarios públicos que se actualizan anualmente.
 
-![](https://cdn-images-1.medium.com/max/800/1*z4OxKW3TwU4l3AsN2Xm0lQ.png) 
+![](https://cdn-images-1.medium.com/max/800/1*z4OxKW3TwU4l3AsN2Xm0lQ.png)
 
 Esto esta corriendo **datasette** detrás de cámaras pero The Baltimore Sun agrego sus propias plantillas y archivos CSS y JS. Para aprender más sobre como personalizar **datasette** visita <https://datasette.readthedocs.io/en/stable/custom_templates.html>
 
-## paso, paso a pasito  
+## paso, paso a pasito
 
 Esta sección es una descripción más técnica del proyecto. La preparación y despliegue de datos con **datasette** es bastante sencillo y se puede dividir en tres fases:
 
-* Adquirir los datos
-* Preparar los datos
-* Servir los datos
+- Adquirir los datos
+- Preparar los datos
+- Servir los datos
 
 ### adquiriendo los datos
 
@@ -133,6 +136,7 @@ for idx,df in enumerate(dfs):
     print(f"Saving dataset #{idx}")
     df.to_csv(INTERIM_DATA.joinpath(f"ripa-2018-part-{idx}.csv"), index = False)
 ```
+
 \- <https://github.com/chekos/RIPA-2018-datasette/blob/fea53ce60ae43f0d7b0dd130109a01496f08e20a/src/data/split_data.py#L1-L16>
 
 > 💡¿**Por qué**? Nomás por si desaparece misteriosamente de la fuente original...
@@ -149,7 +153,7 @@ Una vez que se ha creado este `ID_ÚNICO`, podemos extraer columnas de la tabla 
 
 Luego usamos `csvs-to-sqlite` para crear una base de datos sqlite donde cada CSV es una tabla. En este paso, también incluimos el archivo **Appendix B Table 3.csv** obtenido también del sitio web del DOJ y cualquier otra tabla complementaria que podríamos haber creado para acompañar el conjunto de datos.
 
-``` 
+```
 csvs-to-sqlite data/processed/*.csv "data/external/Appendix B Table 3.csv" datasette/ripa-2018-db.db
 ```
 
@@ -170,12 +174,14 @@ También incluímos lo que **datasette** llama _canned queries_, lo que sería "
 También modificamos algunas plantillas de **datasette**, especificamente `base.html` y `query.html`. La primera fue modificada para incluir metadatos en la etiqueta `<head>` (descripción del sitio, por ejemplo, para cuando se comparta un enlace). La segunda fue modificada para incluir un botón debajo del cuadro de texto donde escribes tus consultas de SQL. Este botón sirve para facilitar las sugerencias de consultas para el repositorio. Al hacer clic, se abre otra ventana en tu navegador que crea un nuevo _issue_ en github con la consulta de SQL que acabas de ejecutar.
 
 También cambiamos algunas opciones para **datasette**:
+
 1. `default_page_size:50` - Muestra solo 50 resultados por página
 2. `sql_time_limit_ms:30000` - Un límite de 30 segundos para ejecutar consultas (es el límite de tiempo de Heroku)
 3. `facet_time_limit_ms:10000` - El tiempo límite que **datasette** debería usar calculando una posible faceta de tu tabla (el default es de 200ms pero nuestro conjunto de datos es tan grande que lo expandimos a 10 segundos)
 
 El código por ejecutar es:
-``` shell
+
+```shell
 datasette ripa-2018-db.db \\
   -m metadata.json \\
   --extra-options="--config default_page_size:50 --config sql_time_limit_ms:30000 --config facet_time_limit_ms:10000"
@@ -185,7 +191,7 @@ datasette ripa-2018-db.db \\
 
 Aquí hay una descripción general de alto nivel del proceso
 
-![<https://github.com/chekos/RIPA-2018-datasette>](https://cdn-images-1.medium.com/max/800/1*DGg6BYW2iexf2SsFrQnpig.png) 
+![<https://github.com/chekos/RIPA-2018-datasette>](https://cdn-images-1.medium.com/max/800/1*DGg6BYW2iexf2SsFrQnpig.png)
 
 Hasta ahora, utilizamos un código de Python para procesar nuestros datos (creando un `UNIQUE_ID` y desglosando el conjunto de datos original con 143 columnas en varios archivos` .csv` más pequeños) y también utilizamos `csvs-to-sqlite` para construir nuestra base de datos `ripa-2018-db.db` de esos archivos` .csv`. Hasta ahora, hemos estado interactuando con nuestro **datasette** ejecutando el comando `datasette ripa-2018-db.db` que ejecuta un servidor local. Para que nuestro **datasette** esté disponible para el mundo, tenemos que implementarlo en línea y, por suerte, es muy, muy fácil de hacer, ya que **datasette** ya incluye un comando de publicación.
 
@@ -193,7 +199,7 @@ Con **datasette** puedes publicar directamente a [Heroku](https://datasette.read
 
 Implementar en Heroku fue tan fácil como ejecutar casi el mismo comando utilizado para servir nuestro **datasette** localmente.
 
-``` shell
+```shell
 datasette publish heroku ripa-2018-db.db \\
   --name ripa-2018-db \\
   -m metadata.json \\
@@ -206,16 +212,15 @@ Para ejecutar esto, necesitará una [cuenta heroku](https://signup.heroku.com/) 
 
 ¡Listo! En este punto, hemos publicado con éxito nuestro **datasette** en heroku y podemos visitar [ripa-2018-db.herokuapp.com](http://ripa-2018-db.herokuapp.com) o [ripa-2018.datasettes.cimarron.io/](http://ripa-2018.datasettes.cimarron.io/)
 
-![<http://ripa-2018.datasettes.cimarron.io/>](https://cdn-images-1.medium.com/max/800/1*fuSRYs18jGBzkvlN60pDLA.gif) 
+![<http://ripa-2018.datasettes.cimarron.io/>](https://cdn-images-1.medium.com/max/800/1*fuSRYs18jGBzkvlN60pDLA.gif)
 
 Este será el final de este proceso para muchas personas. Adquirimos y transformamos con éxito algunos datos y los desplegamos en la nube para que otros puedan explorar e interactuar con ellos. También hemos incluido una descripción HTML que describe nuestro **datasette** para los usuarios e incluso algunas _consultas almacenadas_ para que las personas reproduzcan algunos de los hechos publicados en el Informe Anual 2020.
 
-## automatizando todo  
+## automatizando todo
 
 Si bien los datos subyacentes que estas publicando no cambian con frecuencia, es posible que desees automatizar la implementación de su instancia de **datasette** por muchas razones. Por ejemplo, cuando comencé este proyecto, **datasette** estaba en la versión 0.40 y en el momento en que escribo esta publicación está en la versión 0.42. Para la mayoría de las versiones no necesitarás actualizar tu instancia de **datasette**, pero la versión 0.41 incluía la capacidad de crear páginas personalizadas ([changelog](https://datasette.readthedocs.io/en/stable/changelog.html#v0-41)).
 
-
-> For example, adding a template file called `templates/pages/about.html` will result in a new page being served at `/about`  on your instance.
+> For example, adding a template file called `templates/pages/about.html` will result in a new page being served at `/about` on your instance.
 
 Esto significa que podemos agregar mucho más contexto en nuestra instancia para los usuarios. Tal vez incluya una guía paso a paso para ayudar a las personas a contribuir al proyecto, otros enlaces útiles o una página simple para presentarse para que las personas que usan estos datos aprendan un poco más sobre ti.
 
@@ -223,9 +228,9 @@ También es posible que desee incluir más _consultas almacenadas_ o corregir un
 
 > 🚨 **_Advertencia / Nota_**: Esta próxima parte se vuelve mucho más técnica rápidamente. GitHub Actions es un tema más avanzado. Si no necesitas / deseas actualizar su instancia de datasette recientemente implementada regularmente, no recomendaría pensar en las GitHub Actions por el momento.
 
-*** 
+---
 
-## GitHub Actions  
+## GitHub Actions
 
 > GitHub Actions help you automate your software development workflows in the same place you store code and collaborate on pull requests and issues. You can write individual tasks, called actions, and combine them to create a custom workflow. Workflows are custom automated processes that you can set up in your repository to build, test, package, release, or deploy any code project on GitHub. <br> - [https://help.github.com/en/actions/getting-started-with-github-actions/about-github-actions](https://help.github.com/en/actions/getting-started-with-github-actions/about-github-actions)
 
@@ -233,35 +238,37 @@ No entraremos muy a fondo en las acciones de GitHub en esta publicación. Lo que
 
 Estos existen en sus repositorios de GitHub en `.github/workflows/` generalmente en forma de archivos yaml. La estructura básica es la siguiente.
 
-``` yaml
+```yaml
 name: Example of simple GitHub Action
 
 on:
   push:
     branches: [master]
- 
+
 jobs:
   say-hi:
     runs-on: ubuntu-latest
     steps:
-    - name: Echo Hello World
-      run: |
-        echo "Hello World!"
+      - name: Echo Hello World
+        run: |
+          echo "Hello World!"
 ```
 
 Esta acción se activará cada vez que haya un impulso en su rama maestra y ejecutará el trabajo `say-hi` que se ejecuta en una máquina virtual (VM) ubuntu disponible. En esa VM ejecutará el código `echo "Hello World!"`
 
 Puede ver los resultados / registros de sus acciones en la pestaña **Actions** de tu repositorio.
 
-![](https://cdn-images-1.medium.com/max/800/1*SSxMvEqcCfOyiWB9hidc8A.png) 
+![](https://cdn-images-1.medium.com/max/800/1*SSxMvEqcCfOyiWB9hidc8A.png)
 
 Podrías cambiar facilmente `echo "Hello World!"` con
-``` shell
+
+```shell
 datasette publish heroku ripa-2018-db.db \\
   --name ripa-2018-db \\
   -m metadata.json \\
   --extra-options="--config default_page_size:50 --config sql_time_limit_ms:30000 --config facet_time_limit_ms:10000"
 ```
+
 o mejor aún puedes guardar tu código en un _script_ de bash llamado `heroku_deploy.sh` y ejecutar `sh heroku_deploy.sh` como ejecutarías `echo "Hello World!"`
 
 Afortunadamente, Heroku ya está instalado en nuestro corredor de la GitHub Action ([ubuntu-latest](https://github.com/actions/virtual-environments/blob/master/images/linux/Ubuntu1804-README.md)), por lo que todo lo que tenemos que hacer es iniciar sesión, instalar el complemento `heroku-builds` y ejecutar nuestro _script_ `heroku_deploy.sh`.
@@ -269,6 +276,7 @@ Afortunadamente, Heroku ya está instalado en nuestro corredor de la GitHub Acti
 > 💡 Aprendí sobre la necesidad de instalar `heroku-builds` después de que las acciones de GitHub fallaran un par de veces. No estoy seguro de que esté documentado en **datasette** o en la documentación de GitHub Actions.
 
 Hasta ahora, nuestra GitHub Action se ve así:
+
 ```yaml
 name: Example of simple GitHub Action
 
@@ -280,9 +288,9 @@ jobs:
   publish-to-heroku:
     runs-on: ubuntu-latest
     steps:
-    - name: Publish to Heroku
-      run: |
-        heroku container:login && heroku plugins:install heroku-builds && sh heroku_deploy.sh
+      - name: Publish to Heroku
+        run: |
+          heroku container:login && heroku plugins:install heroku-builds && sh heroku_deploy.sh
 ```
 
 Esto, sin embargo, aún no está listo para funcionar. Para automatizar el inicio de sesión, debe incluir la variable de entorno `HEROKU_API_KEY`. Esto es posible mediante el uso de [GitHub Secrets](https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets).
@@ -302,10 +310,10 @@ jobs:
   publish-to-heroku:
     runs-on: ubuntu-latest
     steps:
-    - name: Publish to Heroku
-      env: ${{ secrets.HEROKU_API_KEY }}
-      run: |
-        heroku container:login && heroku plugins:install heroku-builds && sh heroku_deploy.sh
+      - name: Publish to Heroku
+        env: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          heroku container:login && heroku plugins:install heroku-builds && sh heroku_deploy.sh
 ```
 
 ¡Listo! Ahora, cada vez que empujes código a tu repositorio en la _branch_ "master", implementará una nueva versión de tu **datasette**. Esto significa que puede actualizar su `metadata.json`, por ejemplo, con una nueva _consulta almacenada_ o agregar una nueva página a tus` templates/pages`.
@@ -315,37 +323,49 @@ Para este proyecto, tengo algunos pasos adicionales (pasos de GitHub Action, es 
 Puedes ver el archivo yaml de mi GitHub Action aquí <https://github.com/chekos/RIPA-2018-datasette/blob/master/.github/workflows/main.yml>
 
 ## bonus
+
 **using github issues to suggest queries**
 
 Si visitas <ripa-2018.datasettes.cimarron.io> y ejecutas una consulta, notarás el botón **Submit in GitHub**.
 
-![](https://cdn-images-1.medium.com/max/800/1*hKuWnful3BZbVRBuiIUOuQ.gif) 
+![](https://cdn-images-1.medium.com/max/800/1*hKuWnful3BZbVRBuiIUOuQ.gif)
 
 Esto se hace mediante un ajuste de la plantilla `query.html`. **Datasette** usa `jinja2` y en realidad está pasando la consulta SQL como un parámetro de consulta de URL, lo que significa que puede acceder a él usando `request.query_string.split('sql =')[- 1]`
 
 Ya que tienes acceso a la consulta es facil crear un enlace directo a un _issue_ nuevo en tu repo
 
 {% raw %}
+
 ```ruby
 {% set link_to_new_issue = "<https://GitHub.com/><YOUR_USERNAME>/<YOUR_REPO>/issues/new?title=Query+suggestion&labels=suggestion&body=" + <QUERY_FOR_ISSUE> %}
 ```
+
 {% endraw %}
 
 Así se ve en `query.html`
 {% raw %}
-```html
-...
-    {% set query_for_issue = "%23+title%0A%0A%23+query%0A%60%60%60sql%0A" + request.query_string.split('sql=')[-1] + "%0A%60%60%60" %}
-    {% set link_to_new_issue = "https://GitHub.com/chekos/ripa-2018-datasette/issues/new?title=Query+suggestion&labels=suggestion&body=" + query_for_issue %}
 
-    <p>
-        <button id="sql-format" type="button" hidden>Format SQL</button>
-        <input type="submit" value="Run SQL">
-        <button type="button" class="btn btn-secondary btn-sm"><a href="{{ link_to_new_issue }}" target="_blank">Submit on <i class="fab fa-github"></i></a></button>
-    </p>
+```html
+... {% set query_for_issue = "%23+title%0A%0A%23+query%0A%60%60%60sql%0A" +
+request.query_string.split('sql=')[-1] + "%0A%60%60%60" %} {% set
+link_to_new_issue =
+"https://GitHub.com/chekos/ripa-2018-datasette/issues/new?title=Query+suggestion&labels=suggestion&body="
++ query_for_issue %}
+
+<p>
+  <button id="sql-format" type="button" hidden>Format SQL</button>
+  <input type="submit" value="Run SQL" />
+  <button type="button" class="btn btn-secondary btn-sm">
+    <a href="{{ link_to_new_issue }}" target="_blank"
+      >Submit on <i class="fab fa-github"></i
+    ></a>
+  </button>
+</p>
 ...
 ```
+
 {% endraw %}
+
 ## cuanto tiempo tomó
 
 Todo el proceso tomó alrededor de 20 horas en total, distribuidas en 3 a 4 semanas. La mayor parte estaba planeando y orquestando todo el proceso automatizado usando GitHub Actions. Espero que este tutorial te ayude a ahorrar esas horas extra. Al igual que cualquier otro proyecto de datos, es mejor pasar un tiempo por adelantado pensando y planeando detalladamente cada paso del proceso.
@@ -362,7 +382,8 @@ Te pido que pienses en el papel que desempeñas. ¿Harás del mundo un lugar mej
 
 Te dejo con el siguiente pensamiento de [Data4BlackLives](http://d4bl.org/):
 
-> **Data for Black Lives** es un movimiento de activistas, organizadores y matemáticos comprometidos con la misión de utilizar la ciencia de datos para crear un cambio concreto y medible en la vida de las personas negras. **Desde el advenimiento de la informática, la big data y los algoritmos han penetrado prácticamente todos los aspectos de nuestra vida social y económica. Estos nuevos sistemas de datos tienen un enorme potencial para empoderar a las comunidades de color. Herramientas como el modelado estadístico, la visualización de datos y el abastecimiento público, en las manos correctas, son instrumentos poderosos para combatir el sesgo, construir movimientos progresivos y promover el compromiso cívico. Pero la historia cuenta una historia diferente, una en la que los datos se utilizan con demasiada frecuencia como un instrumento de opresión, que refuerza la desigualdad y perpetúa la injusticia. Redlining fue una empresa basada en datos que resultó en la exclusión sistemática de las comunidades negras de los servicios financieros clave. Las tendencias más recientes como la vigilancia predictiva, las sentencias basadas en el riesgo y los préstamos abusivos son variaciones preocupantes sobre el mismo tema. Hoy, la discriminación es una empresa de alta tecnología.** <br> - [_d4bl.org_](http://d4bl.org/) 
+> **Data for Black Lives** es un movimiento de activistas, organizadores y matemáticos comprometidos con la misión de utilizar la ciencia de datos para crear un cambio concreto y medible en la vida de las personas negras. **Desde el advenimiento de la informática, la big data y los algoritmos han penetrado prácticamente todos los aspectos de nuestra vida social y económica. Estos nuevos sistemas de datos tienen un enorme potencial para empoderar a las comunidades de color. Herramientas como el modelado estadístico, la visualización de datos y el abastecimiento público, en las manos correctas, son instrumentos poderosos para combatir el sesgo, construir movimientos progresivos y promover el compromiso cívico. Pero la historia cuenta una historia diferente, una en la que los datos se utilizan con demasiada frecuencia como un instrumento de opresión, que refuerza la desigualdad y perpetúa la injusticia. Redlining fue una empresa basada en datos que resultó en la exclusión sistemática de las comunidades negras de los servicios financieros clave. Las tendencias más recientes como la vigilancia predictiva, las sentencias basadas en el riesgo y los préstamos abusivos son variaciones preocupantes sobre el mismo tema. Hoy, la discriminación es una empresa de alta tecnología.** <br> - [_d4bl.org_](http://d4bl.org/)
 
-***
+---
+
 Este artículo fue publicado originalmente en inglés en la publicación Towards Data Science, [_Making open data more accessible with datasette_](https://medium.com/@chekos/making-open-data-more-accessible-with-datasette-480a1de5e919)

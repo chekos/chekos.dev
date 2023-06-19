@@ -1,14 +1,17 @@
 ---
-draft: false
 categories:
-- dataviz
-- hip hop
-- archived
+  - data projects
+tags:
+  - dataviz
+  - hip hop
 date: 2020-02-15
 description: Antes de crear tacosdedatos intenté crear un blog de Hip Hop Latino-americano donde iba a analizar de una manera cuantitativa la calidad de discos y canciones.
 ---
+
 # Alemán: Alemalacra Alemalandro Alemaliya
+
 Antes de crear **tacosdedatos** intenté crear un blog de Hip Hop Latino-americano donde iba a analizar de una manera cuantitativa la calidad de discos y canciones.
+
 <!-- more -->
 
 ## La historia
