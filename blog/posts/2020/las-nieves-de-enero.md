@@ -1,5 +1,4 @@
 ---
-draft: false
 categories:
 - personal
 date: 2020-02-10
