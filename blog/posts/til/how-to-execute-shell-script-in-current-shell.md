@@ -35,6 +35,7 @@ to run that in your current shell you use the following syntax
 
 this way your environmental variables are set in your current shell and you can use them as expected.
 
+<!-- more -->
 ## how i learned
 
 i'm testing `SQLModel` and wanted to test access to snowflake. instead of setting the environmental variables manually i thought i'd just run a script that had `export snowflake_username="xyz"` etc, etc.

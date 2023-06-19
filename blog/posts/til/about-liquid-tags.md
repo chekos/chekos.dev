@@ -14,6 +14,7 @@ title: About Liquid Tags
 
 shopify has a github pages site documenting liquid tags which is very useful and easy to use.
 
+<!-- more -->
 ## how i learned
 
 {% raw %}

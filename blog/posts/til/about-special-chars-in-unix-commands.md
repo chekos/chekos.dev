@@ -29,6 +29,7 @@ export SECRET="huh"
 echo "you can see my secret $SECRET"
 ```
 
+<!-- more -->
 ## how i learned
 
 while setting up a GitHub action for the social tech collaborative website that would send a url to a specific slack channel, i would get `$TARGET_URL` instead of the actual url.

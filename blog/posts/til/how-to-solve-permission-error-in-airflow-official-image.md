@@ -18,6 +18,7 @@ i was working on deploying Airflow on a VM at work this week and I got a permiss
 If you google this error i found — among a sea of _almost_ right answers — that most of the solutions online are variations of “change the logs folder’s permissions to 777” meaning anyone can read, write, and execute the contents of the logs. That works. However, you don’t really need _everyone_ to be able to read and write — just this airflow user.
 Updating the UID on the VM’s `.env` file worked perfectly without having to mess with the permissions.
 
+<!-- more -->
 ## how i learned
 
 i kept getting permissions errors so i changed the `./logs/` directories permissions to 777 and ran `docker-compose up airflow-init` . Now that airflow was able to write logs i could run `ls -l logs/` and see that the owner of these logs was some user with id **506** which i recognized from the `.env` file.

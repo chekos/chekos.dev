@@ -14,6 +14,7 @@ title: About Myst-Parser, Es Markdown Pero Rst
 
 MyST-parser is **so easy to use** and it provides all the functionality i need to make docs without using rST.
 
+<!-- more -->
 ## how i learned
 
 i was creating the docs for [`tacosdedatos-utils`](https://tacosdedatos-utils.rtfd.io) and i rather not touch rST ever. i had seen [@choldraf](https://twitter.com/choldraf) tweet [about MyST before](https://twitter.com/choldgraf/status/1272633413132943360?s=20) but i had not had the need to use it.

@@ -32,7 +32,7 @@ gh repo create <name> \
 --license bsd-3-clause-clear
 ```
 
-simplye _create a public repo named <name> include a ReadME, a license and a gitignore file and finally clone it to the local directory._
+simply _create a public repo named <name> include a ReadME, a license and a gitignore file and finally clone it to the local directory._
 
 i might add the `--disable-wiki` simply because i don't use the wikis.
 
@@ -48,6 +48,7 @@ gh alias set pyrepo 'repo create "$1" --public --add-readme --clone --gitignore=
 
 and if i choose to i can add a description by adding `-d "my repos description"` right after `gh pyrepo <name>`
 
+<!-- more -->
 ## how i learned
 
 i've been creating lots of small project repos lately and this feels like a small automation that could solve some frustrations.

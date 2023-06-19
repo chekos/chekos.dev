@@ -58,6 +58,7 @@ Upload zip file as a lambda layer.
 
 In my case I also included `ffprobe` as it's also required for `whisper`.
 
+<!-- more -->
 ## how i learned
 
 i've been using OpenAI's whisper and i want to set it up as a lambda function to transcribe files as they land on an S3 bucket.

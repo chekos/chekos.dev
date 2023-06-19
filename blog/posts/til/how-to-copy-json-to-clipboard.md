@@ -20,6 +20,7 @@ Here's how I can grab the last 10 elements of a JSON array and copy them to my c
 jq '.[-10:]' mydata.json | pbcopy
 ```
 
+<!-- more -->
 ## how i learned
 
 I've been working with my spotify streaming history data and it's a lot of nested data so I've been using `jq` a lot.

@@ -15,6 +15,7 @@ there's a jekyll-plugin named `jekyll-archives` that lets you create archives of
 
 i used it for [socialtech.us](https://socialtech.us/) to create a `category/${category}` page for each of the categories in the site (created dynamically).
 
+<!-- more -->
 ## how i learned
 
 the social tech collaborative website has a `/categories/` page where each category has a header so you can get to each category via url like `socialtech.us/categories#${category}`. for example, you could go to `socialtech.us/categories#texting` if you wanted to see the plays with the tag `texting`. however, because each play can have multiple categories, plays would appear multiple times in the `/categories` page. we wanted a page per category.

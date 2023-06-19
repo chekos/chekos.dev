@@ -67,6 +67,7 @@ returns →
 ]
 ```
 
+<!-- more -->
 ## how i learned
 
 Testing the `til-notion-integration` and `markdownify-notion` I tried reading a list of TILs I had saved in a JSON file. However, each object was separated by a new line - not a comma.

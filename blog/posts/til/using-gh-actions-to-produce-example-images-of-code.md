@@ -26,6 +26,7 @@ This is how the final image looks like
 
 ![9EB00936-09DE-4836-93B6-8504E7E036A8](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/04380cef-2bfc-43f9-a2af-5feed89f0ac4/9EB00936-09DE-4836-93B6-8504E7E036A8.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221216%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221216T205710Z&X-Amz-Expires=3600&X-Amz-Signature=fa6ba352215a639f6a8d3c89cb72397e0d310da5ef891c439e528def853f20dc&X-Amz-SignedHeaders=host&x-id=GetObject)
 
+<!-- more -->
 ## how i learned
 
 I wanted to checkout quarto for a while and in the last rstudio conference they announced it was finally at version 1.0 so I gave it a try. It’s fairly straightforward but the documentation is clearly aimed at helping beginners and people that may not have any programming experience so a lot of the guides and tutorials and examples are for using Quarto within an editor like Rstudio or VS Code. It was hard to find examples of how to use it programmatically _on your own_ - even the automating examples are using their GitHub Actions and services like Quarto publishing. This is actually great in general but if you need to do something custom they may not offer yet you need to figure it out on your own.
