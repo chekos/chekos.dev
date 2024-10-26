@@ -1,3 +1,2 @@
 mkdocs-rss-plugin
 mkdocs-material
-mkdocs-meta
