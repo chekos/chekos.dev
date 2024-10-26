@@ -1,0 +1,1139 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Proporcionar los datos es el primer paso, pero para que sean utilizables y accesibles para la mayoría de las personas, no podemos simplemente publicar datos.">
+      
+      
+        <meta name="author" content="chekos">
+      
+      
+        <link rel="canonical" href="https://chekos.dev/2020/06/haciendo-datos-abiertos-m%C3%A1s-accesibles-con-datasette/">
+      
+      
+        <link rel="prev" href="../about-myst-parser-es-markdown-pero-rst/">
+      
+      
+        <link rel="next" href="../../../2021/09/how-to-execute-a-shell-script-in-the-current-shell/">
+      
+      
+        <link rel="alternate" type="application/rss+xml" title="RSS feed" href="../../../feed_rss_created.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS feed of updated content" href="../../../feed_rss_updated.xml">
+      
+      <link rel="icon" href="../../../assets/icon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>Haciendo datos abiertos más accesibles con datasette - chekos' webblog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#haciendo-datos-abiertos-mas-accesibles-con-datasette" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="chekos&#39; webblog" class="md-header__button md-logo" aria-label="chekos' webblog" data-md-component="logo">
+      
+  <img src="../../../assets/cimarron-logo-no-background.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            chekos' webblog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Haciendo datos abiertos más accesibles con datasette
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="pink" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="pink" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="chekos&#39; webblog" class="md-nav__button md-logo" aria-label="chekos' webblog" data-md-component="logo">
+      
+  <img src="../../../assets/cimarron-logo-no-background.png" alt="logo">
+
+    </a>
+    chekos' webblog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ¡hola! 👋🏼
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Archive
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Archive
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../archive/2023/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../archive/2022/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2022
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../archive/2021/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2021
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../archive/2020/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2020
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Categories
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Categories
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../category/data-projects/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    data projects
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../category/personal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    personal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../category/til/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    til
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prologo" class="md-nav__link">
+    <span class="md-ellipsis">
+      prólogo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sobre-los-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      sobre los datos
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sobre-datasette" class="md-nav__link">
+    <span class="md-ellipsis">
+      sobre datasette
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#paso-paso-a-pasito" class="md-nav__link">
+    <span class="md-ellipsis">
+      paso, paso a pasito
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="paso, paso a pasito">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adquiriendo-los-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      adquiriendo los datos
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preparando-los-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      preparando los datos
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sirviendo-los-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      sirviendo los datos
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#desplegando-en-heroku" class="md-nav__link">
+    <span class="md-ellipsis">
+      desplegando en heroku
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automatizando-todo" class="md-nav__link">
+    <span class="md-ellipsis">
+      automatizando todo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#github-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitHub Actions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bonus" class="md-nav__link">
+    <span class="md-ellipsis">
+      bonus
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cuanto-tiempo-tomo" class="md-nav__link">
+    <span class="md-ellipsis">
+      cuanto tiempo tomó
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#llamado-a-la-accion" class="md-nav__link">
+    <span class="md-ellipsis">
+      llamado a la acción
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2020-06-25 00:00:00" class="md-ellipsis">June 25, 2020</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../../../category/data-projects/">data projects</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              18 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+  
+
+<nav class="md-tags" >
+  
+    
+    
+    
+      <span class="md-tag">sql</span>
+    
+  
+    
+    
+    
+      <span class="md-tag">datasette</span>
+    
+  
+    
+    
+    
+      <span class="md-tag">python</span>
+    
+  
+</nav>
+
+
+
+<h1 id="haciendo-datos-abiertos-mas-accesibles-con-datasette">Haciendo datos abiertos más accesibles con datasette</h1>
+<p>California recientemente liberó datos sobre las detenciones hechas por oficiales de las 8 agencias más grandes del estado. Estos datos cubren los meses de julio a diciembre del 2018. Esta fue la primera ola de divulgación de datos que entrará en vigencia en los años siguientes. Los datos cubrieron más de 1.8 millones de paradas en todo el estado. Si bien este es un paso en la dirección correcta, un solo archivo <code>.csv</code> de alrededor de 640 megabytes con más de 1.8 millones de filas y más de 140 columnas podría ser intimidante para algunas personas que se beneficiarían de la exploración de estos datos: líderes locales, periodistas, activistas y organizadores, por nombrar algunos.</p>
+<!-- more -->
+
+<p>El tercer principio de la <a href="https://opendatacharter.net/principles-es/">carta internacional de datos abiertos</a> es que los datos deben ser accesibles y utilizables.</p>
+<p>Proporcionar los datos es el primer paso, pero para que sean utilizables y accesibles para la mayoría de las personas, no podemos simplemente publicar datos; debemos tener en cuenta la experiencia del usuario y desarrollar formas de facilitar la exploración y el uso de dichos datos.</p>
+<p>En este tutorial, comparto una forma de hacerlo: usando <strong>datasette</strong>, una <em>"herramienta de Python para explorar y publicar datos. Ayuda a las personas a tomar datos de cualquier forma o tamaño y publicarlos como un sitio web interactivo y explorable y con una API acompañante".</em></p>
+<p>Tomamos los datos de detención policial lanzados recientemente por California, los limpiamos y transformamos a como sea necesario, y desplegamos una instancia de <strong>datasette</strong> en Heroku.</p>
+<h2 id="prologo">prólogo</h2>
+<p>La idea de explorar este conjunto de datos vino al escuchar el episodio del 3 de marzo del 2020 del podcast <strong>Pod Save the People</strong>. (minuto 4:12)</p>
+<iframe src="https://open.spotify.com/embed-podcast/episode/1mp0laka9Hkw5jUboBl0Sm" width="100%" height="232" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+
+<p>donde mencionan un artículo de <em>The Appeal</em>:</p>
+<blockquote>
+<p><em>Boudin will announce a second directive today, also reviewed by The Appeal, on what are known as pre-textual stops, in which an officer stops someone for a minor offense or infraction, such as a traffic violation, in order to conduct an unrelated search for items like guns or drugs. According to the new policy, the DA's office will not prosecute possession of contraband cases when the contraband was collected as a result of an infraction-related stop, "where there is no other articulable suspicion of criminal activity." Any deviations from the policy should be made in writing and require approval from the DA or a chief of the criminal division. Additionally, the ban includes cases in which a person consented to a search "because of the long-standing and documented racial and ethnic disparities in law enforcement requests for consent to search," according to the directive.</em> <br> - <a href="https://theappeal.org/san-francisco-da-to-announce-sweeping-changes-on-sentencing-policy-and-police-stops/">https://theappeal.org/san-francisco-da-to-announce-sweeping-changes-on-sentencing-policy-and-police-stops/</a></p>
+</blockquote>
+<p>En el episodio, Sam Sinyangwe menciona que las personas negras y de color están siendo detenidas y registradas a tasas más altas, y que muchos de estos registros son lo que se conocen como 'registros consensuales', lo que significa que la policía no informa ninguna justificación para registrar a la persona mas que preguntar a esa persona si puede registrarlos y que la persona presuntamente da su consentimiento.</p>
+<p>Esta gran disparidad racial es desgarradora pero no es sorpresa.</p>
+<p>Cuando comencé a trabajar con el conjunto de datos me pareció un tanto íncomodo, no era fácil. El tamaño del conjunto de los datos hace que sea díficil trabajar con él para aquellas personas que no analizan datos programáticamente; ya sea con recursos pagados como stata y sas o gratuitos como python y R.</p>
+<p>Esta información no esta diseñada para ser explorada fácilmente pero existen herramientas que pueden ayudar con eso.</p>
+<blockquote>
+<p>💡<strong>Nota</strong>: AB-953, el proyecto de ley que requiere que las agencias reporten todos los datos sobre paradas al Procurador General, no requiere que los datos sean fácilmente "explorables" o "accesibles". El proyecto de ley requiere que los datos sean recopilados y reportados al Procurador General. Este conjunto de datos tal como es sirve para ese propósito.</p>
+</blockquote>
+<h2 id="sobre-los-datos">sobre los datos</h2>
+<p><img alt="**source:** &lt;https://openjustice.doj.ca.gov/data&gt;" src="https://cdn-images-1.medium.com/max/800/1*tDeVEZl_Dbe0DdwkCMPAKQ.png" /></p>
+<p>El conjunto de datos está compuesto por un archivo <code>.csv</code> de 641.4 MB que contiene 1.8 millones de filas y 143 columnas. Cada parada tiene un <code>DOJ_RECORD_ID</code> único y cada persona detenida tiene un <code>PERSON_NUMBER</code>. En total, hay 1,708,377 paradas en este conjunto de datos que involucran a 1,800,054 personas.</p>
+<p>El conjunto de datos incluye información básica sobre cada parada (como duración, hora del día, ciudad más cercana, nombre de la agencia), <strong>información demográfica percibida</strong> (raza / etnia, género, edad, discapacidad), así como información sobre el motivo de detener, buscar, incautar, acciones tomadas durante la detención, contrabando o evidencia encontrada, etc. Para obtener información más detallada sobre el conjunto de datos, se puede leer el archivo README que reunió el Departamento de Justicia y el Informe Anual 2020.</p>
+<blockquote>
+<p>💡<strong>Nota</strong>: Los datos reflejan la percepción del oficial. Son datos demográficos <em>percibidos</em>, es decir, si pareces hispano, te marcan como hispano. Si pareces de 27 años te marcan de 27 años. Este es otro problema para otra ocasión pero hay que tenerlo en mente cuando trabajamos con estos datos.</p>
+</blockquote>
+<p>Esta es la Ola I de una serie de datos de la <em>Racial and Identity Profiling Act</em> (RIPA) que se lanzarán en los años siguientes. Los datos publicados sobre esta ola pertenecen a las 8 agencias de aplicación de la ley (LEA, por sus siglas en inglés) más grandes de California (las que emplean a más de 1,000 oficiales). Estas LEA (y su parte de las observaciones totales) son:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><em>Law enforcement agency</em> (LEA)</th>
+<th style="text-align: center;">N</th>
+<th style="text-align: center;">%</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">California Highway Patrol </td>
+<td style="text-align: center;"> 1,033,421</td>
+<td style="text-align: center;">57.4%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Los Angeles Police Department</td>
+<td style="text-align: center;">  336,681</td>
+<td style="text-align: center;">18.7%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Los Angeles Sheriff Department  </td>
+<td style="text-align: center;">  136,635</td>
+<td style="text-align: center;">7.59%</td>
+</tr>
+<tr>
+<td style="text-align: left;">San Diego Police Department  </td>
+<td style="text-align: center;">  89,455</td>
+<td style="text-align: center;">4.97%</td>
+</tr>
+<tr>
+<td style="text-align: left;">San Bernardino Sheriff Department </td>
+<td style="text-align: center;">  62,433</td>
+<td style="text-align: center;">3.47%</td>
+</tr>
+<tr>
+<td style="text-align: left;">San Francisco Police Department </td>
+<td style="text-align: center;">  56,409</td>
+<td style="text-align: center;">3.14%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Riverside Sheriff Department  </td>
+<td style="text-align: center;">  44.505</td>
+<td style="text-align: center;">2.47%</td>
+</tr>
+<tr>
+<td style="text-align: left;">San Diego Sheriff Department  </td>
+<td style="text-align: center;">  40,515</td>
+<td style="text-align: center;">2.25%</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://data-openjustice.doj.ca.gov/sites/default/files/dataset/2020-01/RIPA%20Dataset%20Read%20Me%2020200106.pdf">README</a> | <a href="https://oag.ca.gov/sites/all/files/agweb/pdfs/ripa/ripa-board-report-2020.pdf">Informe Anual 2020</a></p>
+<h2 id="sobre-datasette">sobre datasette</h2>
+<blockquote>
+<p><strong>Datasette</strong> <em>es una herramienta para explorar y publicar datos. Ayuda a las personas a tomar datos de cualquier forma o tamaño y publicarlos como un sitio web interactivo y explorable y la API que lo acompaña. <strong>Datasette</strong> está dirigido a periodistas de datos, conservadores de museos, archiveros, gobiernos locales y cualquier otra persona que tenga datos que deseen compartir con el mundo. Es parte de un ecosistema más amplio de herramientas y complementos dedicados a hacer que trabajar con datos estructurados sea lo más productivo posible .</em> <br> - <a href="https://datasette.readthedocs.io/"><em>datasette.readthedocs.io</em></a></p>
+</blockquote>
+<p><strong>datasette</strong> es el motor que impulsa este proyecto. En resumen, toma una base de datos sqlite y crea un <em>sitio web interactivo y explorable y API que lo acompaña</em>. Para preparar los datos, utilizamos <code>csvs-to-sqlite</code>, otra herramienta del ecosistema <strong>datasette</strong> que toma archivos CSV y crea bases de datos sqlite a partir de ellos.</p>
+<p>Puedes encontrar ejemplos de <strong>datasette</strong>s públicos en el <a href="https://github.com/simonw/datasette/wiki/Datasettes">wiki del repositorio en GitHub</a>. Aquí se encuentra uno siriviendo los conjuntos de datos publicados por FiveThirtyEight (puedes encontrarlos en su <a href="https://github.com/fivethirtyeight/data">repositorio de GitHub</a>): <a href="https://fivethirtyeight.datasettes.com/">https://fivethirtyeight.datasettes.com/</a></p>
+<p>La página principal muestra la licencia y la fuente de la base de datos. También provee acceso rápido a algunas de sus tablas.</p>
+<p><img alt="" src="https://cdn-images-1.medium.com/max/800/1*y1-FwGc2JhX_1ocHz7TXBA.png" /></p>
+<p>Si haces clic en el nombre de la base de datos, proporcionará una vista de todas sus tablas y un cuadro de texto para que ejecute consultas SQL personalizadas. Esta es una de las características que hace que <strong>datasette</strong> sea una herramienta tan poderosa.</p>
+<p><img alt="" src="https://cdn-images-1.medium.com/max/800/1*7QZ3wF9k2TbMd79dauftng.png" /></p>
+<p>Si haces clic en una de las tablas, verás las facetas sugeridas, un botón de filtro fácil de usar, un enlace JSON y CSV que proporcionará la tabla como uno de esos formatos (esto significa que puede usar esto como API) y una descripción de la tabla. En este caso, la descripción contiene una tabla HTML con encabezados y definiciones.</p>
+<p><img alt="" src="https://cdn-images-1.medium.com/max/800/1*QWaKpYg7mgvGcbeI0Kcwmw.png" /></p>
+<p>Si haces clic en el botón "View and edit SQL", volverás a tener acceso a un cuadro de texto para escribir sus propias consultas.</p>
+<p><img alt="" src="https://cdn-images-1.medium.com/max/800/1*e_nW20lBbSPRAgXLYkgYng.png" /></p>
+<p><strong>datasette</strong> es parte de un ecosistema de herramientas y <em>plugins</em>. Puedes agregar el <em>plugin</em> <strong>datasette-vega</strong> (<a href="https://github.com/simonw/datasette-vega">repo</a>) para agregar visualizaciones interactivas de la tabla (hechas con <a href="https://altair-viz.github.io/">altair</a>)</p>
+<p><img alt="" src="https://cdn-images-1.medium.com/max/800/1*zZ7i8wiP7yBc-cKx7tPW8w.png" /></p>
+<p>Así es como se ve un sitio web básico de <strong>datasette</strong> pero <strong>datasette</strong> es altamente personalizable. Tomemos, por ejemplo, el <strong>datasette</strong> de The Baltimore Sun para que las personas exploren los registros de salarios públicos que se actualizan anualmente.</p>
+<p><img alt="" src="https://cdn-images-1.medium.com/max/800/1*z4OxKW3TwU4l3AsN2Xm0lQ.png" /></p>
+<p>Esto esta corriendo <strong>datasette</strong> detrás de cámaras pero The Baltimore Sun agrego sus propias plantillas y archivos CSS y JS. Para aprender más sobre como personalizar <strong>datasette</strong> visita <a href="https://datasette.readthedocs.io/en/stable/custom_templates.html">https://datasette.readthedocs.io/en/stable/custom_templates.html</a></p>
+<h2 id="paso-paso-a-pasito">paso, paso a pasito</h2>
+<p>Esta sección es una descripción más técnica del proyecto. La preparación y despliegue de datos con <strong>datasette</strong> es bastante sencillo y se puede dividir en tres fases:</p>
+<ul>
+<li>Adquirir los datos</li>
+<li>Preparar los datos</li>
+<li>Servir los datos</li>
+</ul>
+<h3 id="adquiriendo-los-datos">adquiriendo los datos</h3>
+<p>Los datos se obtuvieron del sitio web de Open Justice del Departamento de Justicia de California: <a href="https://openjustice.doj.ca.gov/data">https://openjustice.doj.ca.gov/data</a>. El sitio web proporciona un enlace para descargar los datos (por lo menos desde 5 de mayo de 2020, cuando lo descargué para este proyecto). Para obtener más información sobre los datos en sí, puede leer la sección <a href="https://github.com/chekos/RIPA-2018-datasette#about-the-data">Acerca de los datos</a> en el repositorio de GitHub del proyecto.</p>
+<h3 id="preparando-los-datos">preparando los datos</h3>
+<p>El CSV original es de mas de 640 MB así que el primer paso es dividirlo en 15 archivos para que cada uno pueda subirse a GitHub en este repositorio.</p>
+<pre><code class="language-python">import pandas as pd
+import numpy as np
+from pathlib import Path
+
+THIS_FILE = Path(__file__)
+THIS_DIR = THIS_FILE.parent
+EXTERNAL_DATA = THIS_DIR.joinpath(&quot;./../../data/external/&quot;)
+INTERIM_DATA = THIS_DIR.joinpath(&quot;./../../data/interim/&quot;)
+
+FULL_DB = &quot;RIPA Stop Data 2018.csv&quot;
+data = pd.read_csv(EXTERNAL_DATA.joinpath(FULL_DB))
+
+dfs = np.array_split(data, 15)
+for idx,df in enumerate(dfs):
+    print(f&quot;Saving dataset #{idx}&quot;)
+    df.to_csv(INTERIM_DATA.joinpath(f&quot;ripa-2018-part-{idx}.csv&quot;), index = False)
+</code></pre>
+<p>- <a href="https://github.com/chekos/RIPA-2018-datasette/blob/fea53ce60ae43f0d7b0dd130109a01496f08e20a/src/data/split_data.py#L1-L16">https://github.com/chekos/RIPA-2018-datasette/blob/fea53ce60ae43f0d7b0dd130109a01496f08e20a/src/data/split_data.py#L1-L16</a></p>
+<blockquote>
+<p>💡¿<strong>Por qué</strong>? Nomás por si desaparece misteriosamente de la fuente original...</p>
+</blockquote>
+<p>Sin embargo, debido a que el conjunto de datos es demasiado grande para servir como una sola tabla (1,8 millones de filas por 143 columnas), también se dividió en tablas más pequeñas. Esto significa que tomamos variables relacionadas (basadas en sus sufijos) y las extrajimos en sus propias tablas. Por ejemplo, variables relacionadas con el género como <code>G_FULL</code>,<code>G_MALE</code>, <code>G_FEMALE</code>,<code>G_TRANSGENDER_MAN</code>, <code>G_TRANSGENDER_WOMAN</code>,<code>G_GENDER_NONCOMFORMING</code>, y <code>G_MULTIGENDER</code> se extrajeron de la tabla "principal "y se agregaron a una tabla de <strong>género</strong> en la base de datos.</p>
+<p>Estas se pueden volver a unir a la tabla principal utilizando un <strong>UNIQUE_ID</strong> asignado a ellas.</p>
+<blockquote>
+<p>Este script es demasiado grande para incluir en este blog sin crear una distracción inecesaria pero puedes ver las 91 líneas de código aquí: <a href="https://github.com/chekos/RIPA-2018-datasette/blob/master/src/data/break_down_database.py">https://github.com/chekos/RIPA-2018-datasette/blob/master/src/data/break_down_database.py</a></p>
+</blockquote>
+<p>A cada observación o fila de este conjunto de datos se le asigna un <code>DOJ_RECORD_ID</code> y un<code>PERSON_NUMBER</code>. Estos son exclusivos de la parada y las personas detenidas, respectivamente. Esto significa que podríamos combinarlos para crear un 'ID ÚNICO' para cada fila que podríamos usar para unir tablas. Sin embargo, esto termina siendo una cadena de 22 caracteres que es innecesariamente grande. Para facilitar las cosas, a cada fila se le asigna una identificación numérica que comienza en 1,000,000. Comenzar en un millón es completamente arbitrario, podríamos haber comenzado en cero, pero debido a que hay 1.8 millones de filas, tomamos la decisión de que cada identificación numérica sea de siete dígitos. Este <code>UNIQUE_ID</code> numérico nos permite unir tablas juntas <strong>y</strong> no es una gran adición a la base de datos en términos de memoria.</p>
+<p>Una vez que se ha creado este <code>ID_ÚNICO</code>, podemos extraer columnas de la tabla "principal" en sus propias tablas y guardarlas como archivos CSV individuales con la certeza de que cada observación puede coincidir en estas nuevas tablas.</p>
+<p>Luego usamos <code>csvs-to-sqlite</code> para crear una base de datos sqlite donde cada CSV es una tabla. En este paso, también incluimos el archivo <strong>Appendix B Table 3.csv</strong> obtenido también del sitio web del DOJ y cualquier otra tabla complementaria que podríamos haber creado para acompañar el conjunto de datos.</p>
+<pre><code>csvs-to-sqlite data/processed/*.csv &quot;data/external/Appendix B Table 3.csv&quot; datasette/ripa-2018-db.db
+</code></pre>
+<h3 id="sirviendo-los-datos">sirviendo los datos</h3>
+<p>Después de preparar los datos y crear una base de datos sqlite usamos <strong>datasette</strong> para servirlos como un sitio web interactivo y su API. Esto es tan fácil como ejecutar</p>
+<pre><code class="language-shell">datasette ripa-2018.db
+</code></pre>
+<p>Pero para este proyecto personalizamos nuestro <strong>datasette</strong> un poco.</p>
+<p>Incluimos un tîtulo, una descripción, la url de la fuente de los datos y archivos CSS y JS. Puedes explorar el archivo <code>metadata.json</code> en el repositorio <a href="https://github.com/chekos/RIPA-2018-datasette/blob/master/datasette/metadata.json">datasette/metadata.json</a> para ver que más hicimos.</p>
+<p>También incluímos lo que <strong>datasette</strong> llama <em>canned queries</em>, lo que sería "consultas almacenadas" (?). Estas son consultas de SQL incluídas en tu instancia que aparecen al fondo de tu página principal y tiene su propio URL para facilitar el acceso. Estas consultas las incluimos porque muestran información útil y/o interesante de los datos. Algunas de ellas son consultas que computan información especifica publicada en el reporte anual del 2020.</p>
+<p>También modificamos algunas plantillas de <strong>datasette</strong>, especificamente <code>base.html</code> y <code>query.html</code>. La primera fue modificada para incluir metadatos en la etiqueta <code>&lt;head&gt;</code> (descripción del sitio, por ejemplo, para cuando se comparta un enlace). La segunda fue modificada para incluir un botón debajo del cuadro de texto donde escribes tus consultas de SQL. Este botón sirve para facilitar las sugerencias de consultas para el repositorio. Al hacer clic, se abre otra ventana en tu navegador que crea un nuevo <em>issue</em> en github con la consulta de SQL que acabas de ejecutar.</p>
+<p>También cambiamos algunas opciones para <strong>datasette</strong>:</p>
+<ol>
+<li><code>default_page_size:50</code> - Muestra solo 50 resultados por página</li>
+<li><code>sql_time_limit_ms:30000</code> - Un límite de 30 segundos para ejecutar consultas (es el límite de tiempo de Heroku)</li>
+<li><code>facet_time_limit_ms:10000</code> - El tiempo límite que <strong>datasette</strong> debería usar calculando una posible faceta de tu tabla (el default es de 200ms pero nuestro conjunto de datos es tan grande que lo expandimos a 10 segundos)</li>
+</ol>
+<p>El código por ejecutar es:</p>
+<pre><code class="language-shell">datasette ripa-2018-db.db \\
+  -m metadata.json \\
+  --extra-options=&quot;--config default_page_size:50 --config sql_time_limit_ms:30000 --config facet_time_limit_ms:10000&quot;
+</code></pre>
+<h2 id="desplegando-en-heroku">desplegando en heroku</h2>
+<p>Aquí hay una descripción general de alto nivel del proceso</p>
+<p><img alt="&lt;https://github.com/chekos/RIPA-2018-datasette&gt;" src="https://cdn-images-1.medium.com/max/800/1*DGg6BYW2iexf2SsFrQnpig.png" /></p>
+<p>Hasta ahora, utilizamos un código de Python para procesar nuestros datos (creando un <code>UNIQUE_ID</code> y desglosando el conjunto de datos original con 143 columnas en varios archivos<code>.csv</code> más pequeños) y también utilizamos <code>csvs-to-sqlite</code> para construir nuestra base de datos <code>ripa-2018-db.db</code> de esos archivos<code>.csv</code>. Hasta ahora, hemos estado interactuando con nuestro <strong>datasette</strong> ejecutando el comando <code>datasette ripa-2018-db.db</code> que ejecuta un servidor local. Para que nuestro <strong>datasette</strong> esté disponible para el mundo, tenemos que implementarlo en línea y, por suerte, es muy, muy fácil de hacer, ya que <strong>datasette</strong> ya incluye un comando de publicación.</p>
+<p>Con <strong>datasette</strong> puedes publicar directamente a <a href="https://datasette.readthedocs.io/en/stable/publish.html#publishing-to-heroku">Heroku</a>, <a href="https://datasette.readthedocs.io/en/stable/publish.html#publishing-to-google-cloud-run">Google Cloud Run</a>, o <a href="https://datasette.readthedocs.io/en/stable/publish.html#publishing-to-fly">Fly</a> (por lo menos desde la versión 0.42 que es la que utilizamos en este proyecto). Debido a que tengo experiencia previa en la implementación de heroku, me pareció la más fácil de las tres, pero todas son excelentes opciones y la documentación es fácil de seguir.</p>
+<p>Implementar en Heroku fue tan fácil como ejecutar casi el mismo comando utilizado para servir nuestro <strong>datasette</strong> localmente.</p>
+<pre><code class="language-shell">datasette publish heroku ripa-2018-db.db \\
+  --name ripa-2018-db \\
+  -m metadata.json \\
+  --extra-options=&quot;--config default_page_size:50 --config sql_time_limit_ms:30000 --config facet_time_limit_ms:10000&quot;
+</code></pre>
+<blockquote>
+<p>💡 <strong>Nota</strong> la bandera <code>--name</code> que espcifíca el nombre de nuestra aplicación en Heroku. Esto significa que la publicará a <a href="http://ripa-2018-db.herokuapp.com">ripa-2018-db.herokuapp.com</a> y sobreescribirá cualquier aplicación previa ahí.</p>
+</blockquote>
+<p>Para ejecutar esto, necesitará una <a href="https://signup.heroku.com/">cuenta heroku</a> e instalar la herramienta de <a href="https://devcenter.heroku.com/articles/heroku-cli">línea de comandos de heroku</a>. <strong>Datasette</strong> (usando el la herramienta de línea de comandos) te pedirá que inicies sesión y abrirá una ventana del navegador para que lo haga. Después de iniciar sesión, se encargará del resto.</p>
+<p>¡Listo! En este punto, hemos publicado con éxito nuestro <strong>datasette</strong> en heroku y podemos visitar <a href="http://ripa-2018-db.herokuapp.com">ripa-2018-db.herokuapp.com</a> o <a href="http://ripa-2018.datasettes.cimarron.io/">ripa-2018.datasettes.cimarron.io/</a></p>
+<p><img alt="&lt;http://ripa-2018.datasettes.cimarron.io/&gt;" src="https://cdn-images-1.medium.com/max/800/1*fuSRYs18jGBzkvlN60pDLA.gif" /></p>
+<p>Este será el final de este proceso para muchas personas. Adquirimos y transformamos con éxito algunos datos y los desplegamos en la nube para que otros puedan explorar e interactuar con ellos. También hemos incluido una descripción HTML que describe nuestro <strong>datasette</strong> para los usuarios e incluso algunas <em>consultas almacenadas</em> para que las personas reproduzcan algunos de los hechos publicados en el Informe Anual 2020.</p>
+<h2 id="automatizando-todo">automatizando todo</h2>
+<p>Si bien los datos subyacentes que estas publicando no cambian con frecuencia, es posible que desees automatizar la implementación de su instancia de <strong>datasette</strong> por muchas razones. Por ejemplo, cuando comencé este proyecto, <strong>datasette</strong> estaba en la versión 0.40 y en el momento en que escribo esta publicación está en la versión 0.42. Para la mayoría de las versiones no necesitarás actualizar tu instancia de <strong>datasette</strong>, pero la versión 0.41 incluía la capacidad de crear páginas personalizadas (<a href="https://datasette.readthedocs.io/en/stable/changelog.html#v0-41">changelog</a>).</p>
+<blockquote>
+<p>For example, adding a template file called <code>templates/pages/about.html</code> will result in a new page being served at <code>/about</code> on your instance.</p>
+</blockquote>
+<p>Esto significa que podemos agregar mucho más contexto en nuestra instancia para los usuarios. Tal vez incluya una guía paso a paso para ayudar a las personas a contribuir al proyecto, otros enlaces útiles o una página simple para presentarse para que las personas que usan estos datos aprendan un poco más sobre ti.</p>
+<p>También es posible que desee incluir más <em>consultas almacenadas</em> o corregir un error ortográfico en su descripción. Cualquiera sea la razón, la implementación automática es fácil de lograr. En definitiva, todo lo que necesita es ejecutar <code>datasette heroku publishing</code>, que es un caso de uso perfecto para las GitHub Actions.</p>
+<blockquote>
+<p>🚨 <strong><em>Advertencia / Nota</em></strong>: Esta próxima parte se vuelve mucho más técnica rápidamente. GitHub Actions es un tema más avanzado. Si no necesitas / deseas actualizar su instancia de datasette recientemente implementada regularmente, no recomendaría pensar en las GitHub Actions por el momento.</p>
+</blockquote>
+<hr />
+<h2 id="github-actions">GitHub Actions</h2>
+<blockquote>
+<p>GitHub Actions help you automate your software development workflows in the same place you store code and collaborate on pull requests and issues. You can write individual tasks, called actions, and combine them to create a custom workflow. Workflows are custom automated processes that you can set up in your repository to build, test, package, release, or deploy any code project on GitHub. <br> - <a href="https://help.github.com/en/actions/getting-started-with-github-actions/about-github-actions">https://help.github.com/en/actions/getting-started-with-github-actions/about-github-actions</a></p>
+</blockquote>
+<p>No entraremos muy a fondo en las acciones de GitHub en esta publicación. Lo que necesitas saber es que con las GitHub Actions puede ejecutar tareas en paralelo o en secuencia, y estos se desencadenan por eventos de GitHub como empujar tu código a una <em>branch</em>, abrir una <em>pull request</em>, comentar en un <em>issue</em> o una combinación de muchos.</p>
+<p>Estos existen en sus repositorios de GitHub en <code>.github/workflows/</code> generalmente en forma de archivos yaml. La estructura básica es la siguiente.</p>
+<pre><code class="language-yaml">name: Example of simple GitHub Action
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  say-hi:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo Hello World
+        run: |
+          echo &quot;Hello World!&quot;
+</code></pre>
+<p>Esta acción se activará cada vez que haya un impulso en su rama maestra y ejecutará el trabajo <code>say-hi</code> que se ejecuta en una máquina virtual (VM) ubuntu disponible. En esa VM ejecutará el código <code>echo "Hello World!"</code></p>
+<p>Puede ver los resultados / registros de sus acciones en la pestaña <strong>Actions</strong> de tu repositorio.</p>
+<p><img alt="" src="https://cdn-images-1.medium.com/max/800/1*SSxMvEqcCfOyiWB9hidc8A.png" /></p>
+<p>Podrías cambiar facilmente <code>echo "Hello World!"</code> con</p>
+<pre><code class="language-shell">datasette publish heroku ripa-2018-db.db \\
+  --name ripa-2018-db \\
+  -m metadata.json \\
+  --extra-options=&quot;--config default_page_size:50 --config sql_time_limit_ms:30000 --config facet_time_limit_ms:10000&quot;
+</code></pre>
+<p>o mejor aún puedes guardar tu código en un <em>script</em> de bash llamado <code>heroku_deploy.sh</code> y ejecutar <code>sh heroku_deploy.sh</code> como ejecutarías <code>echo "Hello World!"</code></p>
+<p>Afortunadamente, Heroku ya está instalado en nuestro corredor de la GitHub Action (<a href="https://github.com/actions/virtual-environments/blob/master/images/linux/Ubuntu1804-README.md">ubuntu-latest</a>), por lo que todo lo que tenemos que hacer es iniciar sesión, instalar el complemento <code>heroku-builds</code> y ejecutar nuestro <em>script</em> <code>heroku_deploy.sh</code>.</p>
+<blockquote>
+<p>💡 Aprendí sobre la necesidad de instalar <code>heroku-builds</code> después de que las acciones de GitHub fallaran un par de veces. No estoy seguro de que esté documentado en <strong>datasette</strong> o en la documentación de GitHub Actions.</p>
+</blockquote>
+<p>Hasta ahora, nuestra GitHub Action se ve así:</p>
+<pre><code class="language-yaml">name: Example of simple GitHub Action
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  publish-to-heroku:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish to Heroku
+        run: |
+          heroku container:login &amp;&amp; heroku plugins:install heroku-builds &amp;&amp; sh heroku_deploy.sh
+</code></pre>
+<p>Esto, sin embargo, aún no está listo para funcionar. Para automatizar el inicio de sesión, debe incluir la variable de entorno <code>HEROKU_API_KEY</code>. Esto es posible mediante el uso de <a href="https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets">GitHub Secrets</a>.</p>
+<p>Para crear tu <em>API key</em> necesitas tener instalada la herramienta de heroku para la línea de comando localmente. Ejecuta el comando <code>heroku authorizations:create</code> y añadela a tu repositorio en <strong>Settings &gt; Secrets</strong>. Llámalo <code>HEROKU_API_KEY</code>.</p>
+<p>Para que su GitHub Action tenga acceso a ella, debe agregar la siguiente línea a su archivo yaml</p>
+<pre><code class="language-yaml">name: Example of simple GitHub Action
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  publish-to-heroku:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish to Heroku
+        env: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          heroku container:login &amp;&amp; heroku plugins:install heroku-builds &amp;&amp; sh heroku_deploy.sh
+</code></pre>
+<p>¡Listo! Ahora, cada vez que empujes código a tu repositorio en la <em>branch</em> "master", implementará una nueva versión de tu <strong>datasette</strong>. Esto significa que puede actualizar su <code>metadata.json</code>, por ejemplo, con una nueva <em>consulta almacenada</em> o agregar una nueva página a tus<code>templates/pages</code>.</p>
+<p>Para este proyecto, tengo algunos pasos adicionales (pasos de GitHub Action, es decir) que procesan los datos, construyen la base de datos sqlite3 y la despliegan en heroku cada vez que hay un nuevo "commit" en "master". También incluyo un par de <em>scripts</em> de Python que leen un archivo yaml separado donde tengo todas las <em>consultas almacenadas</em> y las agrego a un <code>updated_metadata.json</code>. Esto es para mantener las cosas un poco más limpias, cada <em>consulta almacenada</em> tiene un título, html_description y una larga consulta SQL; Es más fácil de mantener como un archivo separado, en mi opinión.</p>
+<p>Puedes ver el archivo yaml de mi GitHub Action aquí <a href="https://github.com/chekos/RIPA-2018-datasette/blob/master/.github/workflows/main.yml">https://github.com/chekos/RIPA-2018-datasette/blob/master/.github/workflows/main.yml</a></p>
+<h2 id="bonus">bonus</h2>
+<p><strong>using github issues to suggest queries</strong></p>
+<p>Si visitas <ripa-2018.datasettes.cimarron.io> y ejecutas una consulta, notarás el botón <strong>Submit in GitHub</strong>.</p>
+<p><img alt="" src="https://cdn-images-1.medium.com/max/800/1*hKuWnful3BZbVRBuiIUOuQ.gif" /></p>
+<p>Esto se hace mediante un ajuste de la plantilla <code>query.html</code>. <strong>Datasette</strong> usa <code>jinja2</code> y en realidad está pasando la consulta SQL como un parámetro de consulta de URL, lo que significa que puede acceder a él usando <code>request.query_string.split('sql =')[- 1]</code></p>
+<p>Ya que tienes acceso a la consulta es facil crear un enlace directo a un <em>issue</em> nuevo en tu repo</p>
+<p>{% raw %}</p>
+<pre><code class="language-ruby">{% set link_to_new_issue = &quot;&lt;https://GitHub.com/&gt;&lt;YOUR_USERNAME&gt;/&lt;YOUR_REPO&gt;/issues/new?title=Query+suggestion&amp;labels=suggestion&amp;body=&quot; + &lt;QUERY_FOR_ISSUE&gt; %}
+</code></pre>
+<p>{% endraw %}</p>
+<p>Así se ve en <code>query.html</code>
+{% raw %}</p>
+<pre><code class="language-html">... {% set query_for_issue = &quot;%23+title%0A%0A%23+query%0A%60%60%60sql%0A&quot; +
+request.query_string.split('sql=')[-1] + &quot;%0A%60%60%60&quot; %} {% set
+link_to_new_issue =
+&quot;https://GitHub.com/chekos/ripa-2018-datasette/issues/new?title=Query+suggestion&amp;labels=suggestion&amp;body=&quot;
++ query_for_issue %}
+
+&lt;p&gt;
+  &lt;button id=&quot;sql-format&quot; type=&quot;button&quot; hidden&gt;Format SQL&lt;/button&gt;
+  &lt;input type=&quot;submit&quot; value=&quot;Run SQL&quot; /&gt;
+  &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-sm&quot;&gt;
+    &lt;a href=&quot;{{ link_to_new_issue }}&quot; target=&quot;_blank&quot;
+      &gt;Submit on &lt;i class=&quot;fab fa-github&quot;&gt;&lt;/i
+    &gt;&lt;/a&gt;
+  &lt;/button&gt;
+&lt;/p&gt;
+...
+</code></pre>
+<p>{% endraw %}</p>
+<h2 id="cuanto-tiempo-tomo">cuanto tiempo tomó</h2>
+<p>Todo el proceso tomó alrededor de 20 horas en total, distribuidas en 3 a 4 semanas. La mayor parte estaba planeando y orquestando todo el proceso automatizado usando GitHub Actions. Espero que este tutorial te ayude a ahorrar esas horas extra. Al igual que cualquier otro proyecto de datos, es mejor pasar un tiempo por adelantado pensando y planeando detalladamente cada paso del proceso.</p>
+<h2 id="llamado-a-la-accion">llamado a la acción</h2>
+<p>El mundo ha cambiado. La idea de este proyecto se me ocurrió a mediados de abril y no creé el repositorio de GitHub hasta finales de mes. No comencé a escribir este tutorial hasta la segunda mitad de mayo. Todo ha cambiado desde entonces.</p>
+<p>Todos los días en las redes sociales vemos videos y leemos historias sobre autoridades que abusan de su poder y ejercen violencia contra personas inocentes. No son todos, pero no debería ser ninguno de ellos.</p>
+<p>Creo en los datos como una herramienta para el cambio, para la rendición de cuentas, para la transparencia. El mundo ha cambiado para siempre por la tecnología y los datos. Como tecnólogos, nerds de datos, expertos en políticas o cualquier etiqueta autoascrita que elijan, tu que me lees, tenemos la responsabilidad de que nuestros pares usen nuestras habilidades, nuestras poderosas herramientas, nuestro conocimiento para hacer del mundo un lugar mejor <strong>porque podemos</strong>.</p>
+<p>Te pido que pienses en el papel que desempeñas. ¿Harás del mundo un lugar mejor con las herramientas que estás construyendo, por favor?</p>
+<p>Te dejo con el siguiente pensamiento de <a href="http://d4bl.org/">Data4BlackLives</a>:</p>
+<blockquote>
+<p><strong>Data for Black Lives</strong> es un movimiento de activistas, organizadores y matemáticos comprometidos con la misión de utilizar la ciencia de datos para crear un cambio concreto y medible en la vida de las personas negras. <strong>Desde el advenimiento de la informática, la big data y los algoritmos han penetrado prácticamente todos los aspectos de nuestra vida social y económica. Estos nuevos sistemas de datos tienen un enorme potencial para empoderar a las comunidades de color. Herramientas como el modelado estadístico, la visualización de datos y el abastecimiento público, en las manos correctas, son instrumentos poderosos para combatir el sesgo, construir movimientos progresivos y promover el compromiso cívico. Pero la historia cuenta una historia diferente, una en la que los datos se utilizan con demasiada frecuencia como un instrumento de opresión, que refuerza la desigualdad y perpetúa la injusticia. Redlining fue una empresa basada en datos que resultó en la exclusión sistemática de las comunidades negras de los servicios financieros clave. Las tendencias más recientes como la vigilancia predictiva, las sentencias basadas en el riesgo y los préstamos abusivos son variaciones preocupantes sobre el mismo tema. Hoy, la discriminación es una empresa de alta tecnología.</strong> <br> - <a href="http://d4bl.org/"><em>d4bl.org</em></a></p>
+</blockquote>
+<hr />
+<p>Este artículo fue publicado originalmente en inglés en la publicación Towards Data Science, <a href="https://medium.com/@chekos/making-open-data-more-accessible-with-datasette-480a1de5e919"><em>Making open data more accessible with datasette</em></a></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["header.autohide", "navigation.tracking", "navigation.sections"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  </body>
+</html>
