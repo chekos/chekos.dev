@@ -1,0 +1,10 @@
+[project]
+name = "chekos-dev"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "mkdocs-material>=9.5.44",
+    "mkdocs-rss-plugin>=1.16.0",
+]
