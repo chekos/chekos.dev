@@ -1,6 +1,6 @@
 ---
 title: "Running sudo commands without password on VPS"
-date: "2024-11-12"
+date: 2024-11-12
 categories: 
   - til
 tags:
