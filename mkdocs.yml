@@ -62,6 +62,9 @@ site_author: chekos
 site_description: chekos' weblog
 site_url: https://chekos.dev/
 
+hooks:
+  - hooks/socialmedia.py
+
 markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
