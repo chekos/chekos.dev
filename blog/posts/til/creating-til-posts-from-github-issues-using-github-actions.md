@@ -11,7 +11,7 @@ tags: []
 you can automate creating a new markdown file in a directory in your repo with front matter metadata from github issues. you can then create a pull request to deploy those changes to your main branch. my plan is to use this to capture more ideas on the go (on my phone).
 
 
-```bash
+```bash title="issue-to-md.yml"
 name: Create Post from Issue
 
 permissions:
