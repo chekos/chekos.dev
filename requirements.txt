@@ -1,2 +1,0 @@
-mkdocs-rss-plugin
-mkdocs-material
