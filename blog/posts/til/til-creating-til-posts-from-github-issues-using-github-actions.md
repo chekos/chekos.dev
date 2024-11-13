@@ -1,6 +1,6 @@
 ---
-title: "til: creating til posts from github issues using github actions"
-date: 2024-11-13T04:59:58Z
+title: "creating til posts from github issues using github actions"
+date: 2024-11-12
 categories: [til]
 tags: []
 ---
