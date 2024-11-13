@@ -1,0 +1,69 @@
+name: Create Post from Issue
+
+permissions:
+  contents: write
+  pull-requests: write
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  create-post:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate Post from Issue
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_LABELS: ${{ toJson(github.event.issue.labels) }}
+          ISSUE_CREATED_AT: ${{ github.event.issue.created_at }}
+        run: |
+          # Convert labels to a list of tags
+          TAGS=$(echo $ISSUE_LABELS | jq -r '.[] | .name' | paste -sd, -)
+
+          # Determine directory and category based on issue title prefix "til:"
+          if echo "$ISSUE_TITLE" | grep -iq "^til:"; then
+            DIR="blog/posts/til"
+            CATEGORY="til"
+          else
+            DIR="blog/posts"
+            CATEGORY="project"
+          fi
+          echo $DIR >> $GITHUB_STEP_SUMMARY
+          echo $CATEGORY >> $GITHUB_STEP_SUMMARY
+
+          # Generate a slugified version of the title for the filename
+          SLUG=$(echo "$ISSUE_TITLE" | tr '[:upper:]' '[:lower:]' | tr -cs '[:alnum:]' '-' | sed 's/^-//;s/-$//')
+
+          echo $SLUG >> $GITHUB_STEP_SUMMARY
+          
+          # Create the front matter with category and tags
+          FRONT_MATTER="---\ntitle: \"$ISSUE_TITLE\"\ndate: $ISSUE_CREATED_AT\ncategories: [${CATEGORY}]\ntags: [${TAGS}]\n---"
+
+          # Prepare content for markdown file
+          CONTENT="$FRONT_MATTER\n\n$ISSUE_BODY"
+
+          # Save the content to a markdown file
+          FILENAME="${DIR}/${SLUG}.md"
+          echo $FILENAME >> $GITHUB_STEP_SUMMARY
+          echo -e "$CONTENT" > "$FILENAME"
+
+      - name: Commit and push changes
+        env: 
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b add-post-$ISSUE_NUMBER
+          git add .
+          git commit -m "Add post for Issue: $ISSUE_TITLE"
+          git push -u origin add-post-$ISSUE_NUMBER
+          gh pr create --title "#$ISSUE_NUMBER - $ISSUE_TITLE" --body "Adding new post. Closes #$ISSUE_NUMBER"
