@@ -5,6 +5,7 @@ theme:
     - header.autohide
     - navigation.tracking
     - navigation.sections
+    - content.code.copy
   logo: assets/cimarron-logo-no-background.png
   favicon: assets/icon.ico
   icon:
