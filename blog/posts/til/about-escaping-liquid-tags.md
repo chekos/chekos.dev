@@ -17,7 +17,7 @@ you can use the tags `raw` and `endraw` to escape liquid tags.
 <!-- more -->
 ## how i learned
 
-in the [previous TIL](../liquid-tags-cheatsheet) i tried to write the following
+in the [previous TIL](./about-liquid-tags.md) i tried to write the following
 
 {% raw %}
 i am moving soyserg.io from a hugo site to jekyll and i couldn't figure out how to have nested `{{}}` as in `{{ category/{{category | downcase }} | relative_url }}` which just doesn't work. so i moved to `{{ 'category/' | append: category | downcase | relative_url }}`
