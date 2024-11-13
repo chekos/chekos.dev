@@ -27,13 +27,17 @@ jobs:
           # Convert labels to a list of tags
           TAGS=$(echo $ISSUE_LABELS | jq -r '.[] | .name' | paste -sd, -)
 
-          # Determine directory and category based on issue title prefix "til:"
-          if echo "$ISSUE_TITLE" | grep -iq "^til:"; then
+          # Extract the category from the part of the title before the first colon, default to "project" if none
+          CATEGORY=$(echo "$ISSUE_TITLE" | awk -F: '{print $1}' | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
+          if [ -z "$CATEGORY" ]; then
+            CATEGORY="project"
+          fi
+          
+          # Determine directory based on category
+          if [ "$CATEGORY" = "til" ]; then
             DIR="blog/posts/til"
-            CATEGORY="til"
           else
             DIR="blog/posts"
-            CATEGORY="project"
           fi
           echo $DIR >> $GITHUB_STEP_SUMMARY
           echo $CATEGORY >> $GITHUB_STEP_SUMMARY
@@ -43,8 +47,8 @@ jobs:
 
           echo $SLUG >> $GITHUB_STEP_SUMMARY
           
-          # Create the front matter with category and tags
-          FRONT_MATTER="---\ntitle: \"$ISSUE_TITLE\"\ndate: $ISSUE_CREATED_AT\ncategories: [${CATEGORY}]\ntags: [${TAGS}]\n---"
+          # Create the front matter with category and tags, ensuring date is not quoted
+          FRONT_MATTER="---\ntitle: \"$ISSUE_TITLE\"\ndate: ${ISSUE_CREATED_AT}\ncategories: [${CATEGORY}]\ntags: [${TAGS}]\n---"
 
           # Prepare content for markdown file
           CONTENT="$FRONT_MATTER\n\n$ISSUE_BODY"
