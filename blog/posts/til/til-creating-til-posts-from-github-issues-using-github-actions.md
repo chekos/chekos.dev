@@ -41,12 +41,18 @@ jobs:
           # Convert labels to a list of tags
           TAGS=$(echo $ISSUE_LABELS | jq -r '.[] | .name' | paste -sd, -)
 
+          # Convert ISSUE_CREATED_AT to PST and format as YYYY-MM-DD
+          CREATED_AT_PST=$(TZ="America/Los_Angeles" date -d "${ISSUE_CREATED_AT}" +"%Y-%m-%d")
+
           # Extract the category from the part of the title before the first colon, default to "project" if none
           CATEGORY=$(echo "$ISSUE_TITLE" | awk -F: '{print $1}' | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
           if [ -z "$CATEGORY" ]; then
             CATEGORY="project"
           fi
           
+          # Extract the title content after the first colon
+          TITLE=$(echo "$ISSUE_TITLE" | sed 's/^[^:]*: *//')
+
           # Determine directory based on category
           if [ "$CATEGORY" = "til" ]; then
             DIR="blog/posts/til"
@@ -57,22 +63,15 @@ jobs:
           echo $CATEGORY >> $GITHUB_STEP_SUMMARY
 
           # Generate a slugified version of the title for the filename
-          SLUG=$(echo "$ISSUE_TITLE" | tr '[:upper:]' '[:lower:]' | tr -cs '[:alnum:]' '-' | sed 's/^-//;s/-$//')
+          SLUG=$(echo "$TITLE" | tr '[:upper:]' '[:lower:]' | tr -cs '[:alnum:]' '-' | sed 's/^-//;s/-$//')
 
           echo $SLUG >> $GITHUB_STEP_SUMMARY
           
-          # Create the front matter with category and tags, ensuring date is not quoted
-          FRONT_MATTER="---
-title: \"$ISSUE_TITLE\"
-date: ${ISSUE_CREATED_AT}
-categories: [${CATEGORY}]
-tags: [${TAGS}]
----"
+          # Create the front matter with category, tags, and formatted date
+          FRONT_MATTER="---\ntitle: \"$TITLE\"\ndate: ${CREATED_AT_PST}\ncategories: [${CATEGORY}]\ntags: [${TAGS}]\n---"
 
           # Prepare content for markdown file
-          CONTENT="$FRONT_MATTER
-
-$ISSUE_BODY"
+          CONTENT="$FRONT_MATTER\n\n$ISSUE_BODY"
 
           # Save the content to a markdown file
           FILENAME="${DIR}/${SLUG}.md"
