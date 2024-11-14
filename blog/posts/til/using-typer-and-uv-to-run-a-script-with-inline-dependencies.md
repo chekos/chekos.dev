@@ -101,7 +101,7 @@ feels like a micro-package.
 
 ## how i learned
 
-in another [til](./creating-til-posts-with-github-issues-using-github-actions.md) i described a github action that when triggered (by the creation of a new issue in a github repo) creates a markdown file using the title, created at, and labels of the issue for front-matter metadata. the action then also creates a new branch and a pull request but that's not important right now.
+in another [til](./creating-til-posts-from-github-issues-using-github-actions.md) i described a github action that when triggered (by the creation of a new issue in a github repo) creates a markdown file using the title, created at, and labels of the issue for front-matter metadata. the action then also creates a new branch and a pull request but that's not important right now.
 
 the logic for that first part is encapsulated here:
 

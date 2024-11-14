@@ -6,7 +6,7 @@ tags:
   - automation
 date: 2023-06-24
 ---
-# How to open specific channel in Slack app using Stream Deck
+# how to open specific channel in Slack app using Stream Deck
 
 ## what i learned
 you can open a specific channel/DM conversation on the slack app using the open website action on stream deck but pointing ot to `slack://channel?team=<Workspace ID>&id=<Channel / teammate ID>`. 
