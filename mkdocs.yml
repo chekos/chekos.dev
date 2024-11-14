@@ -83,3 +83,15 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+extra:
+  social:
+    - icon: fontawesome/brands/mastodon
+      link: https://mastodon.socia/@chekoswh
+      name: chekoswh on mastodon
+    - icon: fontawesome/brands/github
+      link: https://github.com/chekos
+      name: chekos on github
+    - icon: fontawesome/brands/instagram
+      link: https://instagram.com/chekos.visuals
+      name: chekos.visuals on instagram
