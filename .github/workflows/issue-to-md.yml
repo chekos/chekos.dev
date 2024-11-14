@@ -8,6 +8,14 @@ on:
   issues:
     types: [opened]
 
+env:
+  ISSUE_NUMBER: ${{ github.event.issue.number }}
+  ISSUE_TITLE: ${{ github.event.issue.title }}
+  ISSUE_BODY: ${{ github.event.issue.body }}
+  ISSUE_LABELS: ${{ toJson(github.event.issue.labels) }}
+  ISSUE_CREATED_AT: ${{ github.event.issue.created_at }}
+  GH_TOKEN: ${{ github.token }}
+
 jobs:
   create-post:
     runs-on: ubuntu-latest
@@ -16,59 +24,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.5.1"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
       - name: Generate Post from Issue
-        env:
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
-          ISSUE_TITLE: ${{ github.event.issue.title }}
-          ISSUE_BODY: ${{ github.event.issue.body }}
-          ISSUE_LABELS: ${{ toJson(github.event.issue.labels) }}
-          ISSUE_CREATED_AT: ${{ github.event.issue.created_at }}
-        run: |
-          # Convert labels to a list of tags
-          TAGS=$(echo $ISSUE_LABELS | jq -r '.[] | .name' | paste -sd, -)
-
-          # Convert ISSUE_CREATED_AT to PST and format as YYYY-MM-DD
-          CREATED_AT_PST=$(TZ="America/Los_Angeles" date -d "${ISSUE_CREATED_AT}" +"%Y-%m-%d")
-
-          # Extract the category from the part of the title before the first colon, default to "project" if none
-          CATEGORY=$(echo "$ISSUE_TITLE" | awk -F: '{print $1}' | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')
-          if [ -z "$CATEGORY" ]; then
-            CATEGORY="project"
-          fi
-          
-          # Extract the title content after the first colon
-          TITLE=$(echo "$ISSUE_TITLE" | sed 's/^[^:]*: *//')
-
-          # Determine directory based on category
-          if [ "$CATEGORY" = "til" ]; then
-            DIR="blog/posts/til"
-          else
-            DIR="blog/posts"
-          fi
-          echo $DIR >> $GITHUB_STEP_SUMMARY
-          echo $CATEGORY >> $GITHUB_STEP_SUMMARY
-
-          # Generate a slugified version of the title for the filename
-          SLUG=$(echo "$TITLE" | tr '[:upper:]' '[:lower:]' | tr -cs '[:alnum:]' '-' | sed 's/^-//;s/-$//')
-
-          echo $SLUG >> $GITHUB_STEP_SUMMARY
-          
-          # Create the front matter with category, tags, and formatted date
-          FRONT_MATTER="---\ntitle: \"$TITLE\"\ndate: ${CREATED_AT_PST}\ncategories: [${CATEGORY}]\ntags: [${TAGS}]\n---"
-
-          # Prepare content for markdown file
-          CONTENT="$FRONT_MATTER\n\n$ISSUE_BODY"
-
-          # Save the content to a markdown file
-          FILENAME="${DIR}/${SLUG}.md"
-          echo $FILENAME >> $GITHUB_STEP_SUMMARY
-          echo -e "$CONTENT" > "$FILENAME"
+        run: >
+          uv run --no-project scripts/issue-to-md.py 
+          -t "$ISSUE_TITLE" 
+          -b "$ISSUE_BODY" 
+          -l "$ISSUE_LABELS" 
+          -c "$ISSUE_CREATED_AT"
 
       - name: Commit and push changes
-        env: 
-          ISSUE_TITLE: ${{ github.event.issue.title }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
-          GH_TOKEN: ${{ github.token }}
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
