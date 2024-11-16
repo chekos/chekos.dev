@@ -67,6 +67,7 @@ plugins:
 
 nav:
   - home: index.md
+  - about: about.md
   - tags: tags.md
 
 hooks:
