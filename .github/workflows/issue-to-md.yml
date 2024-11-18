@@ -19,6 +19,7 @@ env:
 jobs:
   create-post:
     runs-on: ubuntu-latest
+    if: ${{ github.event.issue.user.login == github.repository_owner }}
 
     steps:
       - name: Checkout repository
