@@ -105,7 +105,7 @@ in another [til](./creating-til-posts-from-github-issues-using-github-actions.md
 
 the logic for that first part is encapsulated here:
 
-```shell
+```yaml title=".github/workflows/issue-to-md.yml"
 - name: Generate Post from Issue
     env:
       ISSUE_NUMBER: ${{ github.event.issue.number }}
