@@ -4,6 +4,7 @@ import re
 
 x_intent = "https://twitter.com/intent/tweet"
 fb_sharer = "https://www.facebook.com/sharer/sharer.php"
+bsky_intent = "https://bsky.app/intent/compose"
 include = re.compile(r"[1-9].*")
 
 
@@ -17,6 +18,7 @@ def on_page_markdown(markdown, **kwargs):
     page_title = urllib.parse.quote(page.title + "\n")
 
     return markdown + dedent(f"""
+    [Share on :simple-bluesky:]({bsky_intent}?text={page_title}{page_url}){{ .md-button }}
     [Share on :simple-x:]({x_intent}?text={page_title}&url={page_url}){{ .md-button }}
     [Share on :simple-facebook:]({fb_sharer}?u={page_url}){{ .md-button }}
     """)
