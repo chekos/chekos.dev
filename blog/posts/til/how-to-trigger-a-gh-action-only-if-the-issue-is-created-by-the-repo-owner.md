@@ -6,7 +6,7 @@ tags:
 - gh-actions
 - devops
 title: how to trigger a gh-action only if the issue is created by the repo owner
-bsky_post_uri: https://bsky.app/profile/soyserg.io/post/3lb6zbyyf7k2t
+bsky_post_uri: at://did:plc:skwco2ppjyfktalhnj6rr6ma/app.bsky.feed.post/3lb6zbyyf7k2t
 ---
 
 ## what i learned
