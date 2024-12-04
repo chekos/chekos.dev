@@ -1,0 +1,50 @@
+/* Nested Replies */
+.nested-replies {
+  border-left: 2px solid var(--md-primary-fg-color--light);
+}
+
+/* Comment Text */
+.comment p {
+  margin: 5px 0;
+}
+
+/* Actions Container */
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Individual Action */
+.action {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  color: var(--md-primary-fg-color--light);
+}
+
+.action:hover {
+  color: var(--md-primary-bg-color);
+}
+
+/* SVG Icons */
+.action svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  #comment-section {
+    padding: 10px;
+  }
+
+  .comment {
+    padding-bottom: 10px;
+  }
+
+  .actions {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+}
