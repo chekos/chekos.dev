@@ -7,7 +7,6 @@ docs_dir: blog
 
 theme:
   name: material
-  custom_dir: overrides
   features:
     - header.autohide
     - navigation.tracking
