@@ -78,24 +78,12 @@ function sortByLikes(a, b) {
 
 // Initialize comments section if `bsky_post_uri` is found
 document.addEventListener("DOMContentLoaded", () => {
-    const bskyPostMeta = document.querySelector('meta[name="bsky_post_uri"]');
-    if (bskyPostMeta) {
-        const bskyPostUri = bskyPostMeta.getAttribute("content");
-        const containerId = "bluesky-comments";
+    const commentsContainer = document.getElementById("comment-section");
+    if (commentsContainer) {
+        const bskyPostUri = commentsContainer.getAttribute("data-bsky-post-uri");
 
-        // Add a comments container dynamically
-        const commentsContainer = document.createElement("div");
-        commentsContainer.id = containerId;
-        commentsContainer.style.marginTop = "20px";
-        commentsContainer.innerHTML = "<p>Loading comments...</p>";
-
-        // Append the container to the page (e.g., at the end of the main content)
-        const mainContent = document.querySelector("main");
-        if (mainContent) {
-            mainContent.appendChild(commentsContainer);
+        if (bskyPostUri) {
+            renderCommentSection("comment-section", bskyPostUri);
         }
-
-        // Render the comments section
-        renderCommentSection(containerId, bskyPostUri);
     }
 });
