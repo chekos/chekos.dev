@@ -73,6 +73,7 @@ nav:
 hooks:
   - hooks/socialmedia.py
   - hooks/til-excerpt.py
+  - hooks/bsky-comments.py
 
 markdown_extensions:
   - admonition
