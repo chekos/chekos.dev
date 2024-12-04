@@ -161,11 +161,11 @@ function renderCommentSectionWithPagination(containerId, uri) {
 
 // Initialize the comments section if the page has a placeholder
 document.addEventListener("DOMContentLoaded", () => {
-    const commentsContainer = document.getElementById("comment-section");
+    const commentsContainer = document.getElementById("bluesky-comments");
     if (commentsContainer) {
         const bskyPostUri = commentsContainer.getAttribute("data-bsky-post-uri");
         if (bskyPostUri) {
-            renderCommentSectionWithPagination("comment-section", bskyPostUri);
+            renderCommentSectionWithPagination("bluesky-comments", bskyPostUri);
         }
     }
 });
