@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="https://unpkg.com/bluesky-comments@latest/dist/bluesky-comments.css">
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/bluesky-comments@latest/dist/bluesky-comments.umd.js"></script>
+
+    {% if page.meta and page.meta.bsky_post_uri %}
+    <script>
+        const uri = '{{ page.meta.bsky_post_uri }}';
+        if (uri) {
+        initBlueskyComments('bluesky-comments', uri);
+        }
+    </script>
+{% endif %}
+{% endblock %}
