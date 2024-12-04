@@ -104,3 +104,7 @@ extra:
 
 extra_javascript:
   - js/bsky-comments.js
+
+extra_css:
+  - stylesheets/bsky-comments.css
+
