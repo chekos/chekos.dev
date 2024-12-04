@@ -1,0 +1,14 @@
+#comment-section {
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+}
+
+.comment {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.comment p {
+    margin: 5px 0;
+}
