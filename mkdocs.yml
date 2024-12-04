@@ -63,6 +63,7 @@ plugins:
       categories:
         - categories
         - tags
+      use_git: false
   - social
 
 nav:
@@ -107,4 +108,3 @@ extra_javascript:
 
 extra_css:
   - stylesheets/bsky-comments.css
-
