@@ -1,61 +1,66 @@
 // Fetch the thread data
 async function getPostThread(uri) {
-    const params = new URLSearchParams({ uri });
-    const url = "https://public.api.bsky.app/xrpc/app.bsky.feed.getPostThread?" + params.toString();
+  const params = new URLSearchParams({ uri });
+  const url =
+    "https://public.api.bsky.app/xrpc/app.bsky.feed.getPostThread?" +
+    params.toString();
 
-    try {
-        console.log("Fetching thread data from:", url);
-        const res = await fetch(url, {
-            method: "GET",
-            headers: { Accept: "application/json" },
-            cache: "no-store",
-        });
+  try {
+    console.log("Fetching thread data from:", url);
+    const res = await fetch(url, {
+      method: "GET",
+      headers: { Accept: "application/json" },
+      cache: "no-store",
+    });
 
-        if (!res.ok) {
-            const errorText = await res.text();
-            console.error("API response error:", res.status, res.statusText);
-            console.error("Error details from API:", errorText);
-            throw new Error(errorText || "Unknown API error");
-        }
-
-        const data = await res.json();
-        console.log("Fetched data:", data);
-
-        if (!data.thread || !data.thread.replies) {
-            console.error("Thread or replies missing in response");
-            throw new Error("Invalid thread data");
-        }
-
-        return data.thread;
-    } catch (err) {
-        console.error("Error fetching thread data:", err);
-        return null;
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("API response error:", res.status, res.statusText);
+      console.error("Error details from API:", errorText);
+      throw new Error(errorText || "Unknown API error");
     }
+
+    const data = await res.json();
+    console.log("Fetched data:", data);
+
+    if (!data.thread || !data.thread.replies) {
+      console.error("Thread or replies missing in response");
+      throw new Error("Invalid thread data");
+    }
+
+    return data.thread;
+  } catch (err) {
+    console.error("Error fetching thread data:", err);
+    return null;
+  }
 }
 
 // Sort replies by likes
 function sortByLikes(a, b) {
-    return (b.post.likeCount || 0) - (a.post.likeCount || 0);
+  return (b.post.likeCount || 0) - (a.post.likeCount || 0);
 }
 
 // Recursive function to render nested replies
 function renderNestedReplies(reply, parentDiv) {
-    if (!reply.replies || reply.replies.length === 0) return;
+  if (!reply.replies || reply.replies.length === 0) return;
 
-    const nestedDiv = document.createElement("div");
-    nestedDiv.className = "nested-replies";
-    nestedDiv.style.borderLeft = "2px solid #ddd";
-    nestedDiv.style.marginLeft = "10px";
-    nestedDiv.style.paddingLeft = "10px";
+  const nestedDiv = document.createElement("div");
+  nestedDiv.className = "nested-replies";
+  nestedDiv.style.borderLeft = "2px solid #ddd";
+  nestedDiv.style.marginLeft = "10px";
+  nestedDiv.style.paddingLeft = "10px";
 
-    reply.replies.sort(sortByLikes).forEach((nestedReply) => {
-        const nestedCommentDiv = document.createElement("div");
-        nestedCommentDiv.className = "comment";
+  reply.replies.sort(sortByLikes).forEach((nestedReply) => {
+    const nestedCommentDiv = document.createElement("div");
+    nestedCommentDiv.className = "comment";
 
-        const authorName = nestedReply.post.author?.displayName || nestedReply.post.author?.handle || "Unknown Author";
-        const text = nestedReply.post.record?.text || "No content";
+    const authorName =
+      nestedReply.post.author?.displayName ||
+      nestedReply.post.author?.handle ||
+      "Unknown Author";
+    const text = nestedReply.post.record?.text || "No content";
 
-        nestedCommentDiv.innerHTML = `
+    nestedCommentDiv.innerHTML = `
             <p><strong>${authorName}</strong></p>
             <p>${text}</p>
             <div class="actions">
@@ -63,16 +68,16 @@ function renderNestedReplies(reply, parentDiv) {
             </div>
         `;
 
-        nestedDiv.appendChild(nestedCommentDiv);
-        renderNestedReplies(nestedReply, nestedDiv); // Recursive call
-    });
+    nestedDiv.appendChild(nestedCommentDiv);
+    renderNestedReplies(nestedReply, nestedDiv); // Recursive call
+  });
 
-    parentDiv.appendChild(nestedDiv);
+  parentDiv.appendChild(nestedDiv);
 }
 
 // Render the action buttons (likes, reposts, replies) with SVG icons
 function renderActions(post) {
-    return `
+  return `
         <div class="action">
             <svg xmlns="http://www.w3.org/2000/svg" fill="pink" viewBox="0 0 24 24" stroke-width="1.5" stroke="pink" class="size-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
@@ -96,33 +101,37 @@ function renderActions(post) {
 
 // Render the comment section with pagination
 function renderCommentSectionWithPagination(containerId, uri) {
-    const container = document.getElementById(containerId);
-    if (!container || !uri) return;
+  const container = document.getElementById(containerId);
+  if (!container || !uri) return;
 
-    container.innerHTML = "<p>Loading comments...</p>";
+  container.innerHTML = "<p>Loading comments...</p>";
 
-    getPostThread(uri).then((thread) => {
-        if (!thread || !thread.replies || thread.replies.length === 0) {
-            container.innerHTML = "<p>No comments available</p>";
-            return;
-        }
+  getPostThread(uri)
+    .then((thread) => {
+      if (!thread || !thread.replies || thread.replies.length === 0) {
+        container.innerHTML = "<p>No comments available</p>";
+        return;
+      }
 
-        const sortedReplies = thread.replies.sort(sortByLikes);
-        const commentsDiv = document.createElement("div");
-        const showMoreButton = document.createElement("button");
-        let visibleCount = 3;
+      const sortedReplies = thread.replies.sort(sortByLikes);
+      const commentsDiv = document.createElement("div");
+      const showMoreButton = document.createElement("button");
+      let visibleCount = 3;
 
-        const renderReplies = () => {
-            commentsDiv.innerHTML = ""; // Clear previous replies
-            sortedReplies.slice(0, visibleCount).forEach((reply) => {
-                if (!reply.post) return;
-                const commentDiv = document.createElement("div");
-                commentDiv.className = "comment";
+      const renderReplies = () => {
+        commentsDiv.innerHTML = ""; // Clear previous replies
+        sortedReplies.slice(0, visibleCount).forEach((reply) => {
+          if (!reply.post) return;
+          const commentDiv = document.createElement("div");
+          commentDiv.className = "comment";
 
-                const authorName = reply.post.author?.displayName || reply.post.author?.handle || "Unknown Author";
-                const text = reply.post.record?.text || "No content";
+          const authorName =
+            reply.post.author?.displayName ||
+            reply.post.author?.handle ||
+            "Unknown Author";
+          const text = reply.post.record?.text || "No content";
 
-                commentDiv.innerHTML = `
+          commentDiv.innerHTML = `
                     <p><strong>${authorName}</strong></p>
                     <p>${text}</p>
                     <div class="actions">
@@ -130,42 +139,43 @@ function renderCommentSectionWithPagination(containerId, uri) {
                     </div>
                 `;
 
-                commentsDiv.appendChild(commentDiv);
-                renderNestedReplies(reply, commentDiv); // Add nested replies
-            });
-        };
+          commentsDiv.appendChild(commentDiv);
+          renderNestedReplies(reply, commentDiv); // Add nested replies
+        });
+      };
 
+      renderReplies();
+
+      showMoreButton.textContent = "Show more comments";
+      showMoreButton.style.marginTop = "10px";
+      showMoreButton.addEventListener("click", () => {
+        visibleCount += 5;
         renderReplies();
 
-        showMoreButton.textContent = "Show more comments";
-        showMoreButton.style.marginTop = "10px";
-        showMoreButton.addEventListener("click", () => {
-            visibleCount += 5;
-            renderReplies();
-
-            if (visibleCount >= sortedReplies.length) {
-                showMoreButton.style.display = "none";
-            }
-        });
-
-        container.innerHTML = ""; // Clear the loading message
-        container.appendChild(commentsDiv);
-        if (sortedReplies.length > visibleCount) {
-            container.appendChild(showMoreButton);
+        if (visibleCount >= sortedReplies.length) {
+          showMoreButton.style.display = "none";
         }
-    }).catch((err) => {
-        console.error("Error rendering comment section with pagination:", err);
-        container.innerHTML = "<p>Error loading comments</p>";
+      });
+
+      container.innerHTML = '<p class="admonition-title">bluesky comments</p>'; // Clear the loading message
+      container.appendChild(commentsDiv);
+      if (sortedReplies.length > visibleCount) {
+        container.appendChild(showMoreButton);
+      }
+    })
+    .catch((err) => {
+      console.error("Error rendering comment section with pagination:", err);
+      container.innerHTML = "<p>Error loading comments</p>";
     });
 }
 
 // Initialize the comments section if the page has a placeholder
 document.addEventListener("DOMContentLoaded", () => {
-    const commentsContainer = document.getElementById("bluesky-comments");
-    if (commentsContainer) {
-        const bskyPostUri = commentsContainer.getAttribute("data-bsky-post-uri");
-        if (bskyPostUri) {
-            renderCommentSectionWithPagination("bluesky-comments", bskyPostUri);
-        }
+  const commentsContainer = document.getElementById("bluesky-comments");
+  if (commentsContainer) {
+    const bskyPostUri = commentsContainer.getAttribute("data-bsky-post-uri");
+    if (bskyPostUri) {
+      renderCommentSectionWithPagination("bluesky-comments", bskyPostUri);
     }
+  }
 });
