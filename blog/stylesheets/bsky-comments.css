@@ -1,14 +1,80 @@
+/* General Styles for the Comment Section */
 #bluesky-comments {
     border-top: 1px solid #ddd;
     padding-top: 20px;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
+/* Styles for Each Comment */
 .comment {
-    margin-bottom: 10px;
-    padding-bottom: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
     border-bottom: 1px solid #eee;
 }
 
+/* Nested Replies */
+.nested-replies {
+    border-left: 2px solid #ddd;
+    margin-left: 20px;
+    padding-left: 10px;
+}
+
+/* Author Name */
+.comment p strong {
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Comment Text */
 .comment p {
     margin: 5px 0;
+    color: #555;
+}
+
+/* Actions Container */
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    opacity: 0.8;
+}
+
+/* Individual Action */
+.action {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.875rem;
+    color: #666;
+    cursor: pointer;
+}
+
+.action:hover {
+    color: #333;
+}
+
+/* SVG Icons */
+.action svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    #comment-section {
+        padding: 10px;
+    }
+
+    .comment {
+        padding-bottom: 10px;
+    }
+
+    .actions {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
 }
