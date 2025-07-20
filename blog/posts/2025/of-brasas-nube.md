@@ -14,7 +14,7 @@ tags:
 # Of Brasas & Nube
 
 !!! note "Translation Note"
-    This is an English translation of a piece originally published in Spanish on the [Tacos de Datos Substack](https://tacosdedata.substack.com/). The original Spanish version explored these themes for a Spanish-speaking audience interested in data and technology.
+    This is an English translation of a piece originally published in Spanish on the [Tacos de Datos Substack](https://tacosdedatos.substack.com/). The [original Spanish version](https://tacosdedatos.substack.com/p/de-brasas-and-nube) explored these themes for a Spanish-speaking audience interested in data and technology.
 
 ## part 1: 6 weeks, 6 projects, 4 products
 
